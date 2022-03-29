@@ -8,6 +8,7 @@ SET(${PROJECT_NAME}_MINOR_VERSION 00)
 SET(${PROJECT_NAME}_PATCH_VERSION 00)
 include(${CMAKE_SOURCE_DIR}/cmake/set_version_numbers.cmake)
 
+
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
 # Set the build type to Release if none is specified
@@ -23,6 +24,7 @@ include(cmake/set_default_flags.cmake)
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 include(${CMAKE_SOURCE_DIR}/cmake/add_dependency.cmake)
+include(cmake/enable_code_coverage_report.cmake)
 add_dependency(ChimeraTK-ApplicationCore 02.02 REQUIRED)
 add_dependency(ChimeraTK-ControlSystemAdapter-DoocsAdapter REQUIRED)
 add_dependency(ChimeraTK-DeviceAccess-DoocsBackend REQUIRED)
@@ -57,17 +59,6 @@ set_target_properties( ${PROJECT_NAME}-xmlGenerator PROPERTIES COMPILE_FLAGS "-D
 set_target_properties(${PROJECT_NAME}-xmlGenerator PROPERTIES LINK_FLAGS "${ChimeraTK-ApplicationCore_LINK_FLAGS} ${ChimeraTK-ControlSystemAdapter-DoocsAdapter_LINK_FLAGS}")
 target_link_libraries(${PROJECT_NAME}-xmlGenerator ${ChimeraTK-ApplicationCore_LIBRARIES}
                       ${ChimeraTK-DeviceAccess-DoocsBackend_LIBRARIES})
-
-
-# The make coverage command is only available in debug mode
-IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
-  configure_file(cmake/Makefile.coverage.in ${PROJECT_BINARY_DIR}/Makefile.coverage @ONLY)
-  add_custom_target(coverage
-    make -f Makefile.coverage
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    COMMENT "Generating test coverage documentation" VERBATIM
-  )
-ENDIF(CMAKE_BUILD_TYPE STREQUAL "Debug")
 
 
 # copy example configuration to build directory - this is also needed for the tests
