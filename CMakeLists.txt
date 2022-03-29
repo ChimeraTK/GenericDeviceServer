@@ -68,6 +68,8 @@ FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${PROJECT_BASE_NAME}_server-DoocsVa
 FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${PROJECT_BASE_NAME}_server_configuration.xml DESTINATION ${PROJECT_BINARY_DIR})
 FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/devices.dmap DESTINATION ${PROJECT_BINARY_DIR})
 FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp DESTINATION ${PROJECT_BINARY_DIR})
+FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/initscript.sh DESTINATION ${PROJECT_BINARY_DIR})
+
 
 # Install the executable, the server_rpc file, the dmap file and the mapp file.
 if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/export/doocs/server")
