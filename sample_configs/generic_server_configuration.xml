@@ -1,0 +1,28 @@
+<configuration>
+  <variable name="devices" type="string">
+    <value i="0"  v="TMCB1"/>
+    <value i="0"  v="TMCB2"/>
+  </variable>
+ <module name="TMCB1">
+    <variable name="triggerPath" type="string" value="/msTimer/tick" />
+    <variable name="pathInDevice" type="string" value="" />
+    <variable name="initScript" type="string" value="" />
+    <variable name="targetInCS" type="string" value="TMCB1" />
+ </module>
+ 
+  <module name="TMCB2">
+    <variable name="triggerPath" type="string" value="/msTimer/tick" />
+    <variable name="pathInDevice" type="string" value="" />
+    <variable name="initScript" type="string" value="" />
+    <variable name="targetInCS" type="string" value="TMCB2" />
+ </module>
+
+  <variable name="periodicTimers" type="string">
+    <value i="0"  v="msTimer"/>
+  </variable>
+  
+  <module name="msTimer">
+    <variable name="period" type="uint32" value="1000" />
+  </module>
+
+</configuration>

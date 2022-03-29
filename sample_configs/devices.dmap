@@ -1,0 +1,4 @@
+#TMCB1      sdm://./rebot=192.168.115.240,5001 rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp
+#TMCB2      sdm://./rebot=192.168.115.186,5001 rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp
+TMCB1  (dummy:1?map=rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp)
+TMCB2  (dummy:2?map=rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp)
