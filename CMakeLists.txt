@@ -1,13 +1,13 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 
-SET(PROJECT_BASE_NAME generic)
-PROJECT(${PROJECT_BASE_NAME}_server)
+SET(PROJECT_BASE_NAME doocs-generic-chimeratk)
 
 SET(${PROJECT_NAME}_MAJOR_VERSION 01)
 SET(${PROJECT_NAME}_MINOR_VERSION 00)
 SET(${PROJECT_NAME}_PATCH_VERSION 00)
 include(${CMAKE_SOURCE_DIR}/cmake/set_version_numbers.cmake)
 
+PROJECT(${PROJECT_BASE_NAME}-server${_MAJOR_VERSION})
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
@@ -71,15 +71,6 @@ FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/rfsync_mo13synth_flmo_0.0.0-75-g063
 FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/initscript.sh DESTINATION ${PROJECT_BINARY_DIR})
 
 
-# Install the executable, the server_rpc file, the dmap file and the mapp file.
-if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/export/doocs/server")
-  install(PROGRAMS ${PROJECT_BINARY_DIR}/${PROJECT_NAME} DESTINATION ${PROJECT_BASE_NAME}_server RENAME ${PROJECT_BASE_NAME}_server.dist)
-  #install(FILES ${PROJECT_BINARY_DIR}/RPC_LIBNO DESTINATION ${PROJECT_BASE_NAME}_server)
-  install(FILES ${PROJECT_BINARY_DIR}/${PROJECT_BASE_NAME}_configuration.xml DESTINATION ${PROJECT_BASE_NAME}_server)
-  install(FILES ${PROJECT_BINARY_DIR}/devices.dmap DESTINATION ${PROJECT_BASE_NAME}_server)
-else()
-  install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
-  #install(FILES ${PROJECT_BINARY_DIR}/RPC_LIBNO DESTINATION bin)
-  install(FILES ${PROJECT_BINARY_DIR}/${PROJECT_BASE_NAME}_configuration.xml DESTINATION bin)
-  install(FILES ${PROJECT_BINARY_DIR}/devices.dmap DESTINATION bin)
-endif()
+install(TARGETS ${PROJECT_NAME}
+  RUNTIME DESTINATION bin
+)
