@@ -26,8 +26,25 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 include(${CMAKE_SOURCE_DIR}/cmake/add_dependency.cmake)
 include(cmake/enable_code_coverage_report.cmake)
 add_dependency(ChimeraTK-ApplicationCore 02.02 REQUIRED)
-add_dependency(ChimeraTK-ControlSystemAdapter-DoocsAdapter REQUIRED)
+# add_dependency(ChimeraTK-ControlSystemAdapter-DoocsAdapter REQUIRED)
 add_dependency(ChimeraTK-DeviceAccess-DoocsBackend REQUIRED)
+
+IF(ADAPTER STREQUAL "OPCUA")
+  message("Building against the OPC UA ControlSystemAdater")
+  add_dependency(ChimeraTK-ControlSystemAdapter-OPCUAAdapter REQUIRED)
+  set(Adapter_LINK_FLAGS ${ChimeraTK-ControlSystemAdapter-OPCUAAdapter_LINK_FLAGS})
+  set(Adapter_LIBRARIES ${ChimeraTK-ControlSystemAdapter-OPCUAAdapter_LIBRARIES})
+ELSEIF(ADAPTER STREQUAL "EPICSIOC")
+  message("Building against the EPICS IOC ControlSystemAdater")
+  add_dependency(ChimeraTK-ControlSystemAdapter-EPICS-IOC-Adapter REQUIRED)
+  set(Adapter_LINK_FLAGS ${ChimeraTK-ControlSystemAdapter-EPICS-IOC-Adapter_LINK_FLAGS})
+  set(Adapter_LIBRARIES ${ChimeraTK-ControlSystemAdapter-EPICS-IOC-Adapter_LIBRARIES})
+ELSE()
+  message("Building against the DOOCS ControlSystemAdater")
+  add_dependency(ChimeraTK-ControlSystemAdapter-DoocsAdapter REQUIRED)
+  set(Adapter_LINK_FLAGS ${ChimeraTK-ControlSystemAdapter-DoocsAdapter_LINK_FLAGS})
+  set(Adapter_LIBRARIES ${ChimeraTK-ControlSystemAdapter-DoocsAdapter_LIBRARIES})
+ENDIF()
 
 #FIND_PACKAGE(Boost COMPONENTS unit_test_framework REQUIRED)
 
@@ -49,14 +66,14 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 # main server executable
 add_executable(${PROJECT_NAME} ${server_sources})
 set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "${ChimeraTK-ApplicationCore_CXX_FLAGS}")
-set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "${ChimeraTK-ApplicationCore_LINK_FLAGS} ${ChimeraTK-ControlSystemAdapter-DoocsAdapter_LINK_FLAGS}")
+set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "${ChimeraTK-ApplicationCore_LINK_FLAGS} ${Adapter_LINK_FLAGS}")
 target_link_libraries(${PROJECT_NAME} ${ChimeraTK-ApplicationCore_LIBRARIES}
-                      ${ChimeraTK-ControlSystemAdapter-DoocsAdapter_LIBRARIES}
+                      ${Adapter_LIBRARIES}
                       ${ChimeraTK-DeviceAccess-DoocsBackend_LIBRARIES})
 
 add_executable(${PROJECT_NAME}-xmlGenerator ${server_sources})
-set_target_properties( ${PROJECT_NAME}-xmlGenerator PROPERTIES COMPILE_FLAGS "-DGENERATE_XML")
-set_target_properties(${PROJECT_NAME}-xmlGenerator PROPERTIES LINK_FLAGS "${ChimeraTK-ApplicationCore_LINK_FLAGS} ${ChimeraTK-ControlSystemAdapter-DoocsAdapter_LINK_FLAGS}")
+set_target_properties(${PROJECT_NAME}-xmlGenerator PROPERTIES COMPILE_FLAGS "-DGENERATE_XML")
+set_target_properties(${PROJECT_NAME}-xmlGenerator PROPERTIES LINK_FLAGS "${ChimeraTK-ApplicationCore_LINK_FLAGS} ${Adapter_LINK_FLAGS}")
 target_link_libraries(${PROJECT_NAME}-xmlGenerator ${ChimeraTK-ApplicationCore_LIBRARIES}
                       ${ChimeraTK-DeviceAccess-DoocsBackend_LIBRARIES})
 
