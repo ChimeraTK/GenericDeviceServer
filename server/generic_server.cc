@@ -6,11 +6,11 @@
 namespace ctk = ChimeraTK;
 
 struct GenericApp : public ctk::Application {
-  GenericApp() : Application("generic_device_server") {
+  GenericApp() : Application("generic_chimeratk_server") {
     ChimeraTK::setDMapFilePath("devices.dmap");
   }
   ~GenericApp() { shutdown(); }
-  ctk::ConfigReader config{this, "Config","generic-device-server_configuration.xml", {}};
+  ctk::ConfigReader config{this, "Config", getName() + "_configuration.xml", {}};
   std::vector<ctk::PeriodicTrigger> periodicTriggers;
   struct ConnectingDeviceModuleGroup : public ctk::ModuleGroup{
     ConnectingDeviceModuleGroup(ctk::EntityOwner* owner, std::string alias,

@@ -1,13 +1,22 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 
-SET(PROJECT_BASE_NAME generic-device)
+SET(PROJECT_BASE_NAME generic-chimeratk)
+SET(CHIMERATK_APP_NAME generic_chimeratk_server)
+
+if(ADAPTER STREQUAL "OPCUA")
+  set(PROJECT_NAME_PREFIX opcua-)
+elseif(ADAPTER STREQUAL "DOOCS")
+  set(PROJECT_NAME_PREFIX doocs-)
+elseif(ADAPTER STREQUAL "EPICSIOC")
+  set(PROJECT_NAME_PREFIX epics-)
+endif()
 
 SET(${PROJECT_NAME}_MAJOR_VERSION 01)
 SET(${PROJECT_NAME}_MINOR_VERSION 00)
 SET(${PROJECT_NAME}_PATCH_VERSION 00)
 include(${CMAKE_SOURCE_DIR}/cmake/set_version_numbers.cmake)
 
-PROJECT(${PROJECT_BASE_NAME}-server${_MAJOR_VERSION})
+PROJECT(${PROJECT_NAME_PREFIX}${PROJECT_BASE_NAME}_server${_MAJOR_VERSION})
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
@@ -25,25 +34,9 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 include(${CMAKE_SOURCE_DIR}/cmake/add_dependency.cmake)
 include(cmake/enable_code_coverage_report.cmake)
+include(cmake/set_control_system_adapter.cmake)
 add_dependency(ChimeraTK-ApplicationCore 02.02 REQUIRED)
 add_dependency(ChimeraTK-DeviceAccess-DoocsBackend REQUIRED)
-
-IF(ADAPTER STREQUAL "OPCUA")
-  message("Building against the OPC UA ControlSystemAdater")
-  add_dependency(ChimeraTK-ControlSystemAdapter-OPCUAAdapter REQUIRED)
-  set(Adapter_LINK_FLAGS ${ChimeraTK-ControlSystemAdapter-OPCUAAdapter_LINK_FLAGS})
-  set(Adapter_LIBRARIES ${ChimeraTK-ControlSystemAdapter-OPCUAAdapter_LIBRARIES})
-ELSEIF(ADAPTER STREQUAL "EPICSIOC")
-  message("Building against the EPICS IOC ControlSystemAdater")
-  add_dependency(ChimeraTK-ControlSystemAdapter-EPICS-IOC-Adapter REQUIRED)
-  set(Adapter_LINK_FLAGS ${ChimeraTK-ControlSystemAdapter-EPICS-IOC-Adapter_LINK_FLAGS})
-  set(Adapter_LIBRARIES ${ChimeraTK-ControlSystemAdapter-EPICS-IOC-Adapter_LIBRARIES})
-ELSE()
-  message("Building against the DOOCS ControlSystemAdater")
-  add_dependency(ChimeraTK-ControlSystemAdapter-DoocsAdapter REQUIRED)
-  set(Adapter_LINK_FLAGS ${ChimeraTK-ControlSystemAdapter-DoocsAdapter_LINK_FLAGS})
-  set(Adapter_LIBRARIES ${ChimeraTK-ControlSystemAdapter-DoocsAdapter_LIBRARIES})
-ENDIF()
 
 #FIND_PACKAGE(Boost COMPONENTS unit_test_framework REQUIRED)
 
@@ -79,9 +72,12 @@ target_link_libraries(${PROJECT_NAME}-xmlGenerator ${ChimeraTK-ApplicationCore_L
 
 # copy example configuration to build directory - this is also needed for the tests
 #FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/RPC_LIBNO DESTINATION ${PROJECT_BINARY_DIR})
-FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${PROJECT_BASE_NAME}-server.conf DESTINATION ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.conf)
-FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${PROJECT_BASE_NAME}-server_DoocsVariableConfig.xml DESTINATION ${PROJECT_BINARY_DIR})
-FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${PROJECT_BASE_NAME}-server_configuration.xml DESTINATION ${PROJECT_BINARY_DIR})
+FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/test-server.conf DESTINATION ${PROJECT_BINARY_DIR})
+file(RENAME ${PROJECT_BINARY_DIR}/test-server.conf ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.conf)
+FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/test-server_DoocsVariableConfig.xml DESTINATION ${PROJECT_BINARY_DIR})
+file(RENAME ${PROJECT_BINARY_DIR}/test-server_DoocsVariableConfig.xml ${PROJECT_BINARY_DIR}/${CHIMERATK_APP_NAME}-DoocsVariableConfig.xml)
+FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/test-server_configuration.xml DESTINATION ${PROJECT_BINARY_DIR})
+file(RENAME ${PROJECT_BINARY_DIR}/test-server_configuration.xml ${PROJECT_BINARY_DIR}/${CHIMERATK_APP_NAME}_configuration.xml)
 FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/devices.dmap DESTINATION ${PROJECT_BINARY_DIR})
 FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp DESTINATION ${PROJECT_BINARY_DIR})
 FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/initscript.sh DESTINATION ${PROJECT_BINARY_DIR})
