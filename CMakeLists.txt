@@ -1,7 +1,7 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 
-SET(PROJECT_BASE_NAME generic-chimeratk)
-SET(CHIMERATK_APP_NAME generic_chimeratk_server)
+set(PROJECT_BASE_NAME generic-chimeratk)
+set(CHIMERATK_APP_NAME generic_chimeratk_server)
 
 if(ADAPTER STREQUAL "OPCUA")
   set(PROJECT_NAME_PREFIX opcua-)
@@ -11,12 +11,12 @@ elseif(ADAPTER STREQUAL "EPICSIOC")
   set(PROJECT_NAME_PREFIX epics-)
 endif()
 
-SET(${PROJECT_NAME}_MAJOR_VERSION 01)
-SET(${PROJECT_NAME}_MINOR_VERSION 00)
-SET(${PROJECT_NAME}_PATCH_VERSION 00)
+set(${PROJECT_NAME}_MAJOR_VERSION 01)
+set(${PROJECT_NAME}_MINOR_VERSION 00)
+set(${PROJECT_NAME}_PATCH_VERSION 00)
 include(${CMAKE_SOURCE_DIR}/cmake/set_version_numbers.cmake)
 
-PROJECT(${PROJECT_NAME_PREFIX}${PROJECT_BASE_NAME}_server${_MAJOR_VERSION})
+project(${PROJECT_NAME_PREFIX}${PROJECT_BASE_NAME}_server${${PROJECT_NAME}_MAJOR_VERSION})
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
@@ -44,9 +44,9 @@ list(GET ChimeraTK-DeviceAccess-DoocsBackend_LIBRARIES 0 DoocsBackendLibSymlink)
 get_filename_component(DoocsBackendLib ${DoocsBackendLibSymlink} REALPATH)
 message(${DoocsBackendLib})
 
-AUX_SOURCE_DIRECTORY(${CMAKE_SOURCE_DIR}/server server_sources)
+aux_source_directory(${CMAKE_SOURCE_DIR}/server server_sources)
 
-SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 #INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include headers)
 
 #configure_file(include/version.h.in ${PROJECT_BINARY_DIR}/version.h)
@@ -71,16 +71,13 @@ target_link_libraries(${PROJECT_NAME}-xmlGenerator ${ChimeraTK-ApplicationCore_L
 
 
 # copy example configuration to build directory - this is also needed for the tests
-#FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/RPC_LIBNO DESTINATION ${PROJECT_BINARY_DIR})
-FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/test-server.conf DESTINATION ${PROJECT_BINARY_DIR})
-file(RENAME ${PROJECT_BINARY_DIR}/test-server.conf ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.conf)
-FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/test-server_DoocsVariableConfig.xml DESTINATION ${PROJECT_BINARY_DIR})
-file(RENAME ${PROJECT_BINARY_DIR}/test-server_DoocsVariableConfig.xml ${PROJECT_BINARY_DIR}/${CHIMERATK_APP_NAME}-DoocsVariableConfig.xml)
-FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/test-server_configuration.xml DESTINATION ${PROJECT_BINARY_DIR})
-file(RENAME ${PROJECT_BINARY_DIR}/test-server_configuration.xml ${PROJECT_BINARY_DIR}/${CHIMERATK_APP_NAME}_configuration.xml)
-FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/devices.dmap DESTINATION ${PROJECT_BINARY_DIR})
-FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp DESTINATION ${PROJECT_BINARY_DIR})
-FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/initscript.sh DESTINATION ${PROJECT_BINARY_DIR})
+#file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/RPC_LIBNO DESTINATION ${PROJECT_BINARY_DIR})
+configure_file(${CMAKE_SOURCE_DIR}/sample_configs/test-server.conf ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.conf COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/sample_configs/test-server_DoocsVariableConfig.xml ${PROJECT_BINARY_DIR}/${CHIMERATK_APP_NAME}-DoocsVariableConfig.xml COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/sample_configs/test-server_configuration.xml ${PROJECT_BINARY_DIR}/${CHIMERATK_APP_NAME}_configuration.xml COPYONLY)
+file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/devices.dmap DESTINATION ${PROJECT_BINARY_DIR})
+file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp DESTINATION ${PROJECT_BINARY_DIR})
+file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/initscript.sh DESTINATION ${PROJECT_BINARY_DIR})
 
 
 install(TARGETS ${PROJECT_NAME}
