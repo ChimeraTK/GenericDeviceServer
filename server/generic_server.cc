@@ -9,8 +9,7 @@ struct GenericApp : public ctk::Application {
   GenericApp() : Application("generic_server") {
     ChimeraTK::setDMapFilePath("devices.dmap");
   }
-  ~GenericApp() { dumpConnections();
-shutdown(); }
+  ~GenericApp() { shutdown(); }
   ctk::ConfigReader config{this, "Config", getName() + "_configuration.xml", {}};
   std::vector<ctk::PeriodicTrigger> periodicTriggers;
   struct ConnectingDeviceModuleGroup : public ctk::ModuleGroup{
@@ -32,7 +31,7 @@ static GenericApp theGenericApp;
 
 
 void GenericApp::defineConnections() {
-  std::cout<<"getName():"<<getName()<<std::endl;
+
   std::vector<std::string> timers = config.get<std::vector<std::string>>("periodicTimers");
   for (const std::string& timer : timers) {
     periodicTriggers.emplace_back(ctk::PeriodicTrigger(this, timer, "Periodic timer", config.get<uint32_t>(timer+"/period")));
@@ -46,6 +45,7 @@ void GenericApp::defineConnections() {
     config.get<std::string>(device+"/initScript")
     );
   }
+
   Application::defineConnections();
   //dumpConnections();
 }
