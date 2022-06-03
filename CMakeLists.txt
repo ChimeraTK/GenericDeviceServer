@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(PROJECT_BASE_NAME generic-chimeratk)
+set(PROJECT_BASE_NAME generic-chimeratk-server)
+# Unfortunately application core does not allow hyphens in the app name. Have to use underscore.
 set(CHIMERATK_APP_NAME generic_chimeratk_server)
 
 if(ADAPTER STREQUAL "OPCUA")
@@ -11,12 +12,12 @@ elseif(ADAPTER STREQUAL "EPICSIOC")
   set(PROJECT_NAME_PREFIX epics-)
 endif()
 
-set(${PROJECT_NAME}_MAJOR_VERSION 01)
-set(${PROJECT_NAME}_MINOR_VERSION 00)
-set(${PROJECT_NAME}_PATCH_VERSION 00)
+set(${PROJECT_BASE_NAME}_MAJOR_VERSION 01)
+set(${PROJECT_BASE_NAME}_MINOR_VERSION 00)
+set(${PROJECT_BASE_NAME}_PATCH_VERSION 00)
 include(${CMAKE_SOURCE_DIR}/cmake/set_version_numbers.cmake)
 
-project(${PROJECT_NAME_PREFIX}${PROJECT_BASE_NAME}_server${${PROJECT_NAME}_MAJOR_VERSION})
+project(${PROJECT_NAME_PREFIX}${PROJECT_BASE_NAME}${${PROJECT_BASE_NAME}_MAJOR_VERSION})
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
@@ -47,7 +48,6 @@ message(${DoocsBackendLib})
 aux_source_directory(${CMAKE_SOURCE_DIR}/server server_sources)
 
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-#INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include headers)
 
 #configure_file(include/version.h.in ${PROJECT_BINARY_DIR}/version.h)
 include_directories(${PROJECT_BINARY_DIR})
@@ -71,10 +71,11 @@ target_link_libraries(${PROJECT_NAME}-xmlGenerator ${ChimeraTK-ApplicationCore_L
 
 
 # copy example configuration to build directory - this is also needed for the tests
-#file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/RPC_LIBNO DESTINATION ${PROJECT_BINARY_DIR})
-FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${PROJECT_BASE_NAME}-server01.conf DESTINATION ${PROJECT_BINARY_DIR})
-FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${PROJECT_BASE_NAME}-server-DoocsVariableConfig.xml DESTINATION ${PROJECT_BINARY_DIR})
-FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${PROJECT_BASE_NAME}-server_configuration.xml DESTINATION ${PROJECT_BINARY_DIR})
+# The doocs server config and doocs adapter config
+FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/doocs-${PROJECT_BASE_NAME}${${PROJECT_BASE_NAME}_MAJOR_VERSION}.conf DESTINATION ${PROJECT_BINARY_DIR})
+FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}-DoocsVariableConfig.xml DESTINATION ${PROJECT_BINARY_DIR})
+# The application configuration and map/dmap files
+FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}_configuration.xml DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/devices.dmap DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/initscript.sh DESTINATION ${PROJECT_BINARY_DIR})
