@@ -72,9 +72,9 @@ target_link_libraries(${PROJECT_NAME}-xmlGenerator ${ChimeraTK-ApplicationCore_L
 
 # copy example configuration to build directory - this is also needed for the tests
 #file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/RPC_LIBNO DESTINATION ${PROJECT_BINARY_DIR})
-configure_file(${CMAKE_SOURCE_DIR}/sample_configs/test-server.conf ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.conf COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/sample_configs/test-server_DoocsVariableConfig.xml ${PROJECT_BINARY_DIR}/${CHIMERATK_APP_NAME}-DoocsVariableConfig.xml COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/sample_configs/test-server_configuration.xml ${PROJECT_BINARY_DIR}/${CHIMERATK_APP_NAME}_configuration.xml COPYONLY)
+FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${PROJECT_BASE_NAME}-server01.conf DESTINATION ${PROJECT_BINARY_DIR})
+FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${PROJECT_BASE_NAME}-server-DoocsVariableConfig.xml DESTINATION ${PROJECT_BINARY_DIR})
+FILE(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${PROJECT_BASE_NAME}-server_configuration.xml DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/devices.dmap DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/initscript.sh DESTINATION ${PROJECT_BINARY_DIR})
