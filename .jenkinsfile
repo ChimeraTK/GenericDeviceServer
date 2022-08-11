@@ -1,0 +1,3 @@
+@Library('ChimeraTK') _
+env.MAILTO="nadeem.shehzad@desy.de"
+autojob(['ChimeraTK/ApplicationCore', 'ChimeraTK/DeviceAccess-DoocsBackend'], 'https://github.com/ChimeraTK/GenericDeviceServer.git')
