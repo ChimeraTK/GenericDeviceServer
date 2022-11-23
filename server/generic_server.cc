@@ -6,28 +6,30 @@
 namespace ctk = ChimeraTK;
 
 struct GenericApp : public ctk::Application {
-  GenericApp() : Application("generic_chimeratk_server") { ChimeraTK::setDMapFilePath("devices.dmap"); }
-  ~GenericApp() { shutdown(); }
+  GenericApp();
+  ~GenericApp() override { shutdown(); }
+
   ctk::ConfigReader config{this, "Config", getName() + "_configuration.xml", {}};
   std::vector<ctk::PeriodicTrigger> periodicTriggers;
+
   struct ConnectingDeviceModuleGroup : public ctk::ModuleGroup {
-    ConnectingDeviceModuleGroup(ctk::EntityOwner* owner, std::string alias, std::string triggerPath,
+    ConnectingDeviceModuleGroup(ctk::ModuleGroup* owner, std::string alias, std::string triggerPath,
         std::string pathInDevice, std::string initScript)
     : ModuleGroup(owner, alias, ""), _deviceModule(this, alias, triggerPath, nullptr, pathInDevice) {
       if(!initScript.empty()) {
-        initHandler =
-            std::make_unique<ctk::ScriptedInitHandler>(this, "", "", initScript, _deviceModule.getDeviceModule());
+        initHandler = std::make_unique<ctk::ScriptedInitHandler>(this, "", "", initScript, _deviceModule);
       }
     }
     ctk::ConnectingDeviceModule _deviceModule;
     std::unique_ptr<ctk::ScriptedInitHandler> initHandler;
   };
   std::vector<ConnectingDeviceModuleGroup> connectingDeviceModules;
-  void defineConnections() override;
 };
 static GenericApp theGenericApp;
 
-void GenericApp::defineConnections() {
+GenericApp::GenericApp() : Application("generic_chimeratk_server") {
+  ChimeraTK::setDMapFilePath("devices.dmap");
+
   std::vector<std::string> timers = config.get<std::vector<std::string>>("periodicTimers");
   for(const std::string& timer : timers) {
     periodicTriggers.emplace_back(
@@ -39,7 +41,4 @@ void GenericApp::defineConnections() {
     connectingDeviceModules.emplace_back(this, device, config.get<std::string>(device + "/triggerPath"),
         config.get<std::string>(device + "/pathInDevice"), config.get<std::string>(device + "/initScript"));
   }
-
-  Application::defineConnections();
-  //dumpConnections();
 }
