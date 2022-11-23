@@ -1,11 +1,11 @@
 <configuration>
   <variable name="devices" type="string">
     <value i="0"  v="TMCB1"/>
-    <value i="0"  v="TMCB2"/>
+    <value i="1"  v="TMCB2"/>
   </variable>
  <module name="TMCB1">
     <variable name="triggerPath" type="string" value="/msTimer/tick" />
-    <variable name="pathInDevice" type="string" value="" />
+    <variable name="pathInDevice" type="string" value="/BSP" />
     <variable name="initScript" type="string" value="" />
     <variable name="targetInCS" type="string" value="TMCB1" />
  </module>
