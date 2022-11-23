@@ -9,7 +9,7 @@ struct GenericApp : public ctk::Application {
   GenericApp();
   ~GenericApp() override { shutdown(); }
 
-  ctk::ConfigReader config{this, "Config", getName() + "_configuration.xml", {}};
+  ctk::ConfigReader config{this, "Config", getName() + "_configuration.xml"};
   std::vector<ctk::PeriodicTrigger> periodicTriggers;
 
   struct ConnectingDeviceModuleGroup : public ctk::ModuleGroup {
@@ -20,7 +20,7 @@ struct GenericApp : public ctk::Application {
         initHandler = std::make_unique<ctk::ScriptedInitHandler>(this, "", "", initScript, _deviceModule);
       }
     }
-    ctk::ConnectingDeviceModule _deviceModule;
+    ctk::DeviceModule _deviceModule;
     std::unique_ptr<ctk::ScriptedInitHandler> initHandler;
   };
   std::vector<ConnectingDeviceModuleGroup> connectingDeviceModules;
