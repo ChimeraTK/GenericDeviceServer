@@ -80,6 +80,12 @@ file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/devices.dmap DESTINATION ${PROJECT_
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/initscript.sh DESTINATION ${PROJECT_BINARY_DIR})
 
+# Test executables and helper scripts
+# C++ executable to mimic an initi script. It usually would be python, but we don't want an extra dependency on the pyton bindings
+add_executable(writeWordStatus tests/writeWordStatus.cc)
+set_target_properties(writeWordStatus PROPERTIES COMPILE_FLAGS "${ChimeraTK-DeviceAccess_CXX_FLAGS}")
+set_target_properties(writeWordStatus PROPERTIES LINK_FLAGS "${ChimeraTK-DeviceAccess_LINK_FLAGS}")
+target_link_libraries(writeWordStatus ${ChimeraTK-ApplicationCore_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}
   RUNTIME DESTINATION bin
