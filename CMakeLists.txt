@@ -83,12 +83,15 @@ file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/devices.dmap DESTINATION ${PROJECT_
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/initscript.sh DESTINATION ${PROJECT_BINARY_DIR})
 
+FIND_PACKAGE(Boost COMPONENTS unit_test_framework)
+include_directories(${Boost_INCLUDE_DIRS})
+
 # Test executables and helper scripts
 foreach(target writeWordStatus testGenericServer)
     add_executable(${target} tests/${target}.cc)
     set_target_properties(${target} PROPERTIES COMPILE_FLAGS "${ChimeraTK-ApplicationCore_CXX_FLAGS}")
     set_target_properties(${target} PROPERTIES LINK_FLAGS "${ChimeraTK-ApplicationCore_LINK_FLAGS}")
-    target_link_libraries(${target} ${PROJECT_BASE_NAME} ${ChimeraTK-ApplicationCore_LIBRARIES})
+    target_link_libraries(${target} ${PROJECT_BASE_NAME} ${ChimeraTK-ApplicationCore_LIBRARIES} ${Boost_LIBRARIES})
 endforeach()
 
 enable_testing()
