@@ -7,14 +7,12 @@
     <variable name="triggerPath" type="string" value="/msTimer/tick" />
     <variable name="pathInDevice" type="string" value="/BSP" />
     <variable name="initScript" type="string" value="./writeWordStatus" />
-    <variable name="targetInCS" type="string" value="TMCB1" />
  </module>
  
   <module name="TMCB2">
     <variable name="triggerPath" type="string" value="/msTimer/tick" />
     <variable name="pathInDevice" type="string" value="" />
     <variable name="initScript" type="string" value="" />
-    <variable name="targetInCS" type="string" value="TMCB2" />
  </module>
 
   <variable name="periodicTimers" type="string">
