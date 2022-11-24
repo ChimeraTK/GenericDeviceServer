@@ -46,27 +46,30 @@ get_filename_component(DoocsBackendLib ${DoocsBackendLibSymlink} REALPATH)
 message(${DoocsBackendLib})
 
 aux_source_directory(${CMAKE_SOURCE_DIR}/server server_sources)
+aux_source_directory(${CMAKE_SOURCE_DIR}/src library_sources)
 
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 #configure_file(include/version.h.in ${PROJECT_BINARY_DIR}/version.h)
-include_directories(${PROJECT_BINARY_DIR})
+include_directories(${CMAKE_SOURCE_DIR}/include)
 
 # library for code shared between server executable and tests
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+
+add_library(${PROJECT_BASE_NAME} SHARED ${library_sources} )
 
 # main server executable
 add_executable(${PROJECT_NAME} ${server_sources})
 set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "${ChimeraTK-ApplicationCore_CXX_FLAGS}")
 set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "${ChimeraTK-ApplicationCore_LINK_FLAGS} ${Adapter_LINK_FLAGS}")
-target_link_libraries(${PROJECT_NAME} ${ChimeraTK-ApplicationCore_LIBRARIES}
+target_link_libraries(${PROJECT_NAME} ${PROJECT_BASE_NAME} ${ChimeraTK-ApplicationCore_LIBRARIES}
                       ${Adapter_LIBRARIES}
                       ${ChimeraTK-DeviceAccess-DoocsBackend_LIBRARIES})
 
 add_executable(${PROJECT_NAME}-xmlGenerator ${server_sources})
 set_target_properties(${PROJECT_NAME}-xmlGenerator PROPERTIES COMPILE_FLAGS "-DGENERATE_XML")
 set_target_properties(${PROJECT_NAME}-xmlGenerator PROPERTIES LINK_FLAGS "${ChimeraTK-ApplicationCore_LINK_FLAGS} ${Adapter_LINK_FLAGS}")
-target_link_libraries(${PROJECT_NAME}-xmlGenerator ${ChimeraTK-ApplicationCore_LIBRARIES}
+target_link_libraries(${PROJECT_NAME}-xmlGenerator ${PROJECT_BASE_NAME} ${ChimeraTK-ApplicationCore_LIBRARIES}
                       ${ChimeraTK-DeviceAccess-DoocsBackend_LIBRARIES})
 
 
@@ -85,7 +88,7 @@ foreach(target writeWordStatus testGenericServer)
     add_executable(${target} tests/${target}.cc)
     set_target_properties(${target} PROPERTIES COMPILE_FLAGS "${ChimeraTK-ApplicationCore_CXX_FLAGS}")
     set_target_properties(${target} PROPERTIES LINK_FLAGS "${ChimeraTK-ApplicationCore_LINK_FLAGS}")
-    target_link_libraries(${target} ${ChimeraTK-ApplicationCore_LIBRARIES})
+    target_link_libraries(${target} ${PROJECT_BASE_NAME} ${ChimeraTK-ApplicationCore_LIBRARIES})
 endforeach()
 
 enable_testing()
