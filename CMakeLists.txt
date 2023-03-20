@@ -37,7 +37,7 @@ include(${CMAKE_SOURCE_DIR}/cmake/add_dependency.cmake)
 include(cmake/enable_code_coverage_report.cmake)
 include(cmake/set_control_system_adapter.cmake)
 add_dependency(ChimeraTK-ApplicationCore 02.02 REQUIRED)
-add_dependency(ChimeraTK-DeviceAccess-DoocsBackend REQUIRED)
+add_dependency(ChimeraTK-DeviceAccess-DoocsBackend 01.04 REQUIRED)
 
 #FIND_PACKAGE(Boost COMPONENTS unit_test_framework REQUIRED)
 
