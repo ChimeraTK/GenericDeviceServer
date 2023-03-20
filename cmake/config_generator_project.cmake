@@ -18,13 +18,12 @@
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
 find_package(ConfigGenerator 02.00 REQUIRED)
+list(APPEND CMAKE_MODULE_PATH ${ConfigGenerator_DIR}/shared)
 
 set(DESTDIR share/ConfigGenerator-${PROJECT_NAME}-${${PROJECT_NAME}_MAJOR_VERSION}-${${PROJECT_NAME}_MINOR_VERSION})
 
 # copy all script files from config generator to our build directory
-file(GLOB scripts RELATIVE ${ConfigGenerator_DIR} ${ConfigGenerator_DIR}/*.sh ${ConfigGenerator_DIR}/*.py
-                           ${ConfigGenerator_DIR}/*.inc ${ConfigGenerator_DIR}/ConfigGenerator/*.py
-                           ${ConfigGenerator_DIR}/TestFacility/*.py)
+file(GLOB_RECURSE scripts RELATIVE ${ConfigGenerator_DIR} ${ConfigGenerator_DIR}/*)
 foreach(script ${scripts})
   configure_file("${ConfigGenerator_DIR}/${script}" "${PROJECT_BINARY_DIR}/${script}" COPYONLY)
 endforeach()
