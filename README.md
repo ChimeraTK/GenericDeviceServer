@@ -162,4 +162,4 @@ TBD
 The mapping file for OPC-UA has to be named
 `generic_chimeratk_server_mapping.xml`.
 
-For further details on the format, refer to TBD
+For further details on the format, refer to the [example configuration](https://github.com/ChimeraTK/ControlSystemAdapter-OPC-UA-Adapter/blob/master/opcuaAdapter_mapping.xml)
