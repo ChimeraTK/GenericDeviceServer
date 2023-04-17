@@ -53,7 +53,7 @@ following parameters
 
 - `triggerPath`, a string describing a variable path which, when written to,
   will trigger a read-out of the device. This can either be an arbitrary path
-  which is then exposed to the control system and can be written to manally, or
+  which is then exposed to the control system and can be written to manually, or
   a path to a previously configured timer's `tick` output, for periodic read-out.
 - `pathInDevice`, a string specifying which part of the device should be
   exposed, or all of it, by using either `"/"` or the empty string `""`.
@@ -72,7 +72,7 @@ A trigger can be configured using
 
 #### Walkthrough of a full example
 
-The code snipptes below are taken from the XML file in the `sample_configs`
+The code snippets below are taken from the XML file in the `sample_configs`
 folder in this repository.
 
 First, we start with the usual XML declaration and root tag.:
@@ -139,7 +139,7 @@ And then we just close off the file.
 
 ### Configuring the control system
 
-The configuration file for the control system depends on the chosed control
+The configuration file for the control system depends on the chosen control
 system adapter. If no file is provided, it will default to expose everything to
 the control system.
 
