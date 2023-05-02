@@ -19,7 +19,7 @@ set(${PROJECT_BASE_NAME}_MINOR_VERSION 02)
 set(${PROJECT_BASE_NAME}_PATCH_VERSION 00)
 include(${CMAKE_SOURCE_DIR}/cmake/set_version_numbers.cmake)
 
-project(${PROJECT_NAME_PREFIX}${PROJECT_BASE_NAME})
+project(${PROJECT_NAME_PREFIX}${PROJECT_BASE_NAME}${${PROJECT_BASE_NAME}_MAJOR_VERSION})
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
@@ -50,18 +50,18 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 # library for code shared between server executable and tests
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-add_library(${PROJECT_BASE_NAME} SHARED ${library_sources} )
+add_library(${PROJECT_NAME}_impl SHARED ${library_sources} )
 
 # main server executable
 add_executable(${PROJECT_NAME} ${server_sources})
-target_link_libraries(${PROJECT_NAME} PUBLIC ${PROJECT_BASE_NAME}
+target_link_libraries(${PROJECT_NAME} PUBLIC ${PROJECT_NAME}_impl
                       PRIVATE ChimeraTK::ChimeraTK-ApplicationCore
                       PRIVATE ChimeraTK::SelectedAdapter
                       PRIVATE ChimeraTK::ChimeraTK-DeviceAccess-DoocsBackend)
 
 add_executable(${PROJECT_NAME}-xmlGenerator ${server_sources})
 target_compile_options(${PROJECT_NAME}-xmlGenerator PRIVATE "-DGENERATE_XML")
-target_link_libraries(${PROJECT_NAME}-xmlGenerator PUBLIC ${PROJECT_BASE_NAME}
+target_link_libraries(${PROJECT_NAME}-xmlGenerator PUBLIC ${PROJECT_NAME}_impl
                       PRIVATE ChimeraTK::ChimeraTK-ApplicationCore
                       PRIVATE ChimeraTK::ChimeraTK-DeviceAccess-DoocsBackend)
 
@@ -81,7 +81,7 @@ find_package(Boost COMPONENTS unit_test_framework)
 # Test executables and helper scripts
 foreach(target writeWordStatus testGenericServer)
     add_executable(${target} tests/${target}.cc)
-    target_link_libraries(${target} PUBLIC ${PROJECT_BASE_NAME}
+    target_link_libraries(${target} PUBLIC ${PROJECT_NAME}_impl
                           PRIVATE ChimeraTK::ChimeraTK-ApplicationCore
                           PRIVATE Boost::unit_test_framework)
 endforeach()
@@ -93,4 +93,4 @@ add_test(testGenericServer ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/testGenericServer)
 #install executables
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
 # install library
-install(FILES ${PROJECT_BINARY_DIR}/lib${PROJECT_BASE_NAME}.so DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
+install(FILES ${PROJECT_BINARY_DIR}/lib${PROJECT_NAME}_impl.so DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
