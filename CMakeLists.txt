@@ -14,8 +14,8 @@ elseif(ADAPTER STREQUAL "EPICS7IOC")
   set(PROJECT_NAME_PREFIX epics7-)
 endif()
 
-set(${PROJECT_BASE_NAME}_MAJOR_VERSION 01)
-set(${PROJECT_BASE_NAME}_MINOR_VERSION 02)
+set(${PROJECT_BASE_NAME}_MAJOR_VERSION 02)
+set(${PROJECT_BASE_NAME}_MINOR_VERSION 00)
 set(${PROJECT_BASE_NAME}_PATCH_VERSION 00)
 include(${CMAKE_SOURCE_DIR}/cmake/set_version_numbers.cmake)
 
@@ -37,7 +37,7 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 include(cmake/enable_code_coverage_report.cmake)
 include(cmake/set_control_system_adapter.cmake)
-find_package(ChimeraTK-ApplicationCore 02.02 REQUIRED)
+find_package(ChimeraTK-ApplicationCore 03.00 REQUIRED)
 find_package(ChimeraTK-DeviceAccess-DoocsBackend 01.04 REQUIRED)
 
 aux_source_directory(${CMAKE_SOURCE_DIR}/server server_sources)
