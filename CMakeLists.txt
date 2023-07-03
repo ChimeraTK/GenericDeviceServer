@@ -50,47 +50,19 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 # library for code shared between server executable and tests
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-add_library(${PROJECT_NAME}_impl SHARED ${library_sources} )
+add_library(${PROJECT_NAME}_impl STATIC ${library_sources} )
 
 # main server executable
 add_executable(${PROJECT_NAME} ${server_sources})
 target_link_libraries(${PROJECT_NAME} PUBLIC ${PROJECT_NAME}_impl
                       PRIVATE ChimeraTK::ChimeraTK-ApplicationCore
-                      PRIVATE ChimeraTK::SelectedAdapter
-                      PRIVATE ChimeraTK::ChimeraTK-DeviceAccess-DoocsBackend)
+                      PRIVATE ChimeraTK::SelectedAdapter)
 
 add_executable(${PROJECT_NAME}-xmlGenerator ${server_sources})
 target_compile_options(${PROJECT_NAME}-xmlGenerator PRIVATE "-DGENERATE_XML")
 target_link_libraries(${PROJECT_NAME}-xmlGenerator PUBLIC ${PROJECT_NAME}_impl
-                      PRIVATE ChimeraTK::ChimeraTK-ApplicationCore
-                      PRIVATE ChimeraTK::ChimeraTK-DeviceAccess-DoocsBackend)
+                      PRIVATE ChimeraTK::ChimeraTK-ApplicationCore)
 
 # copy example configuration to build directory - this is also needed for the tests
 # The doocs server config and doocs adapter config
-file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/doocs-${PROJECT_BASE_NAME}${${PROJECT_BASE_NAME}_MAJOR_VERSION}.conf 
-     DESTINATION ${PROJECT_BINARY_DIR}/${PROJECT_NAME_PREFIX}${PROJECT_BASE_NAME}.conf)
-file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}-DoocsVariableConfig.xml DESTINATION ${PROJECT_BINARY_DIR})
-# The application configuration and map/dmap files
-file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}_configuration.xml DESTINATION ${PROJECT_BINARY_DIR})
-file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/devices.dmap DESTINATION ${PROJECT_BINARY_DIR})
-file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp DESTINATION ${PROJECT_BINARY_DIR})
-file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/initscript.sh DESTINATION ${PROJECT_BINARY_DIR})
-
-find_package(Boost COMPONENTS unit_test_framework)
-
-# Test executables and helper scripts
-foreach(target writeWordStatus testGenericServer)
-    add_executable(${target} tests/${target}.cc)
-    target_link_libraries(${target} PUBLIC ${PROJECT_NAME}_impl
-                          PRIVATE ChimeraTK::ChimeraTK-ApplicationCore
-                          PRIVATE Boost::unit_test_framework)
-endforeach()
-
-enable_testing()
-#don't add the helper scripts as tests
-add_test(testGenericServer ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/testGenericServer)
-
-#install executables
-install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
-# install library
-install(FILES ${PROJECT_BINARY_DIR}/lib${PROJECT_NAME}_impl.so DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
+FILE( COPY sample_configs/ DESTINATION ${PROJECT_BINARY_DIR})
