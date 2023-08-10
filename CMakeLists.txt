@@ -51,18 +51,17 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 add_library(${PROJECT_NAME}_impl SHARED ${library_sources} )
+target_link_libraries(${PROJECT_NAME}_impl ChimeraTK::ChimeraTK-ApplicationCore)
 
 # main server executable
 add_executable(${PROJECT_NAME} ${server_sources})
 target_link_libraries(${PROJECT_NAME} PUBLIC ${PROJECT_NAME}_impl
-                      PRIVATE ChimeraTK::ChimeraTK-ApplicationCore
                       PRIVATE ChimeraTK::SelectedAdapter
                       PRIVATE ChimeraTK::ChimeraTK-DeviceAccess-DoocsBackend)
 
 add_executable(${PROJECT_NAME}-xmlGenerator ${server_sources})
 target_compile_options(${PROJECT_NAME}-xmlGenerator PRIVATE "-DGENERATE_XML")
 target_link_libraries(${PROJECT_NAME}-xmlGenerator PUBLIC ${PROJECT_NAME}_impl
-                      PRIVATE ChimeraTK::ChimeraTK-ApplicationCore
                       PRIVATE ChimeraTK::ChimeraTK-DeviceAccess-DoocsBackend)
 
 # copy example configuration to build directory - this is also needed for the tests
@@ -82,7 +81,6 @@ find_package(Boost COMPONENTS unit_test_framework)
 foreach(target writeWordStatus testGenericServer)
     add_executable(${target} tests/${target}.cc)
     target_link_libraries(${target} PUBLIC ${PROJECT_NAME}_impl
-                          PRIVATE ChimeraTK::ChimeraTK-ApplicationCore
                           PRIVATE Boost::unit_test_framework)
 endforeach()
 
