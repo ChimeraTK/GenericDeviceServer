@@ -145,12 +145,12 @@ the control system.
 
 #### DOOCS
 
-DOOCS requires a basic server configuration file named `doocs-generic-chimeratk-server01.conf` to set `SVR.RPC_NUMBER` 
+DOOCS requires you to set up a server configuration file named `doocs-generic-chimeratk-server01.conf`.
 
-Additional configuration can be done through the DOOCS variable mapping file. It has to be named
-`generic_chimeratk_server-DoocsVariableConfig.xml`. If omitted, all variables are exported to DOOCS.
+Additional configuration of variable mapping can be done through the DOOCS variable mapping file. It has to be named
+`generic_chimeratk_server-DoocsVariableConfig.xml`.
 
-For details, refer to the [documentation of the DOOCS
+For details on both, refer to the [documentation of the DOOCS
 control system adapter](https://chimeratk.github.io/ControlSystemAdapter-DoocsAdapter/master/index.html#Integration)
 
 #### EPICS
