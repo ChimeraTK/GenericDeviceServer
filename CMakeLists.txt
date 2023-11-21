@@ -50,18 +50,17 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 # library for code shared between server executable and tests
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-add_library(${PROJECT_NAME}_impl STATIC ${library_sources} )
+add_library(${PROJECT_NAME}_impl SHARED ${library_sources} )
+target_link_libraries(${PROJECT_NAME}_impl ChimeraTK::ChimeraTK-ApplicationCore)
 
 # main server executable
 add_executable(${PROJECT_NAME} ${server_sources})
 target_link_libraries(${PROJECT_NAME} PUBLIC ${PROJECT_NAME}_impl
-                      PRIVATE ChimeraTK::ChimeraTK-ApplicationCore
                       PRIVATE ChimeraTK::SelectedAdapter)
 
 add_executable(${PROJECT_NAME}-xmlGenerator ${server_sources})
 target_compile_options(${PROJECT_NAME}-xmlGenerator PRIVATE "-DGENERATE_XML")
-target_link_libraries(${PROJECT_NAME}-xmlGenerator PUBLIC ${PROJECT_NAME}_impl
-                      PRIVATE ChimeraTK::ChimeraTK-ApplicationCore)
+target_link_libraries(${PROJECT_NAME}-xmlGenerator PUBLIC ${PROJECT_NAME}_impl)
 
 # copy example configuration to build directory - this is also needed for the tests
 # The doocs server config and doocs adapter config
