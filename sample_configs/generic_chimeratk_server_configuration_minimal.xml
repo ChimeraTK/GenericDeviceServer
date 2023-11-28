@@ -1,13 +1,14 @@
+<?xml version="1.0"?>
 <configuration>
   <variable name="devices" type="string">
-    <value i="0"  v="ADC_LOGICAL"/>
+    <value i="0" v="ADC_LOGICAL"/>
   </variable>
- <module name="ADC_LOGICAL">
-    <variable name="triggerPath" type="string" value="/msTimer/tick" />
-    <variable name="pathInDevice" type="string" value="" />
-    <variable name="initScript" type="string" value="./initscript.py" />
- </module>
+  <module name="ADC_LOGICAL">
+    <variable name="triggerPath" type="string" value="/msTimer/tick"/>
+    <variable name="pathInDevice" type="string" value=""/>
+    <variable name="initScript" type="string" value="./initscript.py"/>
+  </module>
   <variable name="periodicTimers" type="string">
-    <value i="0"  v="msTimer"/>
+    <value i="0" v="msTimer"/>
   </variable>
 </configuration>

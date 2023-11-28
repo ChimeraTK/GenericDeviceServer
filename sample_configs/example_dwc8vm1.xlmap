@@ -1,78 +1,89 @@
+<?xml version="1.0"?>
 <logicalNameMap>
-    <module name="board">
-        <redirectedRegister name="version">
-          <targetDevice>ADC_BOARD</targetDevice>
-          <targetRegister>BSP/PRJ_VERSION</targetRegister>
-        </redirectedRegister>
-        <redirectedRegister name="scratch">
-          <targetDevice>ADC_BOARD</targetDevice>
-          <targetRegister>BSP/SCRATCH</targetRegister>
-          <plugin name="forceReadOnly"/>
-        </redirectedRegister>
-    </module>
-    <module name="timing">
-        <redirectedRegister name="triggerCnt">
-          <targetDevice>ADC_BOARD</targetDevice>
-          <targetRegister>TIMING.TRIGGER_CNT</targetRegister>
-        </redirectedRegister>
-        <redirectedRegister name="triggerCntIrq0">
-          <targetDevice>ADC_BOARD</targetDevice>
-          <targetRegister>TIMING.TRIGGER_CNT_IRQ</targetRegister>
-        </redirectedRegister>
-        <redirectedRegister name="irq0">
-          <targetDevice>ADC_BOARD</targetDevice>
-          <targetRegister>IRQ</targetRegister>
-        </redirectedRegister>
-    </module>
-    <redirectedRegister name="doubleBuffered">
-        <targetDevice>ADC_BOARD</targetDevice>
-        <targetRegister>/DAQBUF/DAQ_CTRL_BUF0</targetRegister>
-        <plugin name="doubleBuffer">
-            <parameter name="secondBuffer">/DAQBUF/DAQ_CTRL_BUF1</parameter>
-            <parameter name="currentBufferNumber">/DAQ/ACTIVE_BUF</parameter>
-            <parameter name="enableDoubleBuffering">/DAQ/DOUBLE_BUF_ENA</parameter>
-            <parameter name="daqNumber">0</parameter>
-        </plugin>
+  <module name="board">
+    <redirectedRegister name="version">
+      <targetDevice>ADC_BOARD</targetDevice>
+      <targetRegister>BSP/PRJ_VERSION</targetRegister>
     </redirectedRegister>
-    <module name="channels">
-        <redirectedChannel name="signal10">
-          <targetDevice>ADC_BOARD</targetDevice>
-          <targetRegister>DAQBUF/DAQ_CTRL_BUF0</targetRegister>
-          <targetChannel>10</targetChannel>
-          <plugin name="typeHintModifier"><parameter name="type">int32</parameter></plugin>
-        </redirectedChannel>
-        <redirectedChannel name="signal10_db">
-          <targetDevice>this</targetDevice>
-          <targetRegister>/doubleBuffered</targetRegister>
-          <targetChannel>10</targetChannel>
-          <plugin name="typeHintModifier"><parameter name="type">int32</parameter></plugin>
-        </redirectedChannel>
-    </module>
-    <module  name="attenuator">
-        <redirectedRegister name="attSelectionMask">
-          <targetDevice>ADC_BOARD</targetDevice>
-          <targetRegister>RTM/ATT_SEL</targetRegister>
-          <plugin name="typeHintModifier"><parameter name="type">uint16</parameter></plugin>
-        </redirectedRegister>
-        <variable name="attFactor">
-            <type>float32</type>
-            <value>0</value>
-        </variable>
-        <redirectedRegister name="attSetpoint">
-          <targetDevice>ADC_BOARD</targetDevice>
-          <targetRegister>RTM/ATT_VAL</targetRegister>
-          <plugin name="math">
-              <parameter name="enable_push_parameters" />
-              <parameter name="formula"> f*x </parameter>
-              <parameter name="f">/attenuator/attFactor</parameter>
-          </plugin>
-          <plugin name="typeHintModifier"><parameter name="type">int32</parameter></plugin>
-        </redirectedRegister>
-        <redirectedRegister name="attReadback">
-          <targetDevice>ADC_BOARD</targetDevice>
-          <targetRegister>RTM/ATT_VAL</targetRegister>
-          <plugin name="forceReadOnly"/>
-          <plugin name="typeHintModifier"><parameter name="type">int32</parameter></plugin>
-        </redirectedRegister>
-    </module>
+    <redirectedRegister name="scratch">
+      <targetDevice>ADC_BOARD</targetDevice>
+      <targetRegister>BSP/SCRATCH</targetRegister>
+      <plugin name="forceReadOnly"/>
+    </redirectedRegister>
+  </module>
+  <module name="timing">
+    <redirectedRegister name="triggerCnt">
+      <targetDevice>ADC_BOARD</targetDevice>
+      <targetRegister>TIMING.TRIGGER_CNT</targetRegister>
+    </redirectedRegister>
+    <redirectedRegister name="triggerCntIrq0">
+      <targetDevice>ADC_BOARD</targetDevice>
+      <targetRegister>TIMING.TRIGGER_CNT_IRQ</targetRegister>
+    </redirectedRegister>
+    <redirectedRegister name="irq0">
+      <targetDevice>ADC_BOARD</targetDevice>
+      <targetRegister>IRQ</targetRegister>
+    </redirectedRegister>
+  </module>
+  <redirectedRegister name="doubleBuffered">
+    <targetDevice>ADC_BOARD</targetDevice>
+    <targetRegister>/DAQBUF/DAQ_CTRL_BUF0</targetRegister>
+    <plugin name="doubleBuffer">
+      <parameter name="secondBuffer">/DAQBUF/DAQ_CTRL_BUF1</parameter>
+      <parameter name="currentBufferNumber">/DAQ/ACTIVE_BUF</parameter>
+      <parameter name="enableDoubleBuffering">/DAQ/DOUBLE_BUF_ENA</parameter>
+      <parameter name="daqNumber">0</parameter>
+    </plugin>
+  </redirectedRegister>
+  <module name="channels">
+    <redirectedChannel name="signal10">
+      <targetDevice>ADC_BOARD</targetDevice>
+      <targetRegister>DAQBUF/DAQ_CTRL_BUF0</targetRegister>
+      <targetChannel>10</targetChannel>
+      <plugin name="typeHintModifier">
+        <parameter name="type">int32</parameter>
+      </plugin>
+    </redirectedChannel>
+    <redirectedChannel name="signal10_db">
+      <targetDevice>this</targetDevice>
+      <targetRegister>/doubleBuffered</targetRegister>
+      <targetChannel>10</targetChannel>
+      <plugin name="typeHintModifier">
+        <parameter name="type">int32</parameter>
+      </plugin>
+    </redirectedChannel>
+  </module>
+  <module name="attenuator">
+    <redirectedRegister name="attSelectionMask">
+      <targetDevice>ADC_BOARD</targetDevice>
+      <targetRegister>RTM/ATT_SEL</targetRegister>
+      <plugin name="typeHintModifier">
+        <parameter name="type">uint16</parameter>
+      </plugin>
+    </redirectedRegister>
+    <variable name="attFactor">
+      <type>float32</type>
+      <value>0</value>
+    </variable>
+    <redirectedRegister name="attSetpoint">
+      <targetDevice>ADC_BOARD</targetDevice>
+      <targetRegister>RTM/ATT_VAL</targetRegister>
+      <plugin name="math">
+        <parameter name="enable_push_parameters"/>
+        <parameter name="formula"> f*x </parameter>
+        <parameter name="f">/attenuator/attFactor</parameter>
+      </plugin>
+      <plugin name="typeHintModifier">
+        <parameter name="type">int32</parameter>
+      </plugin>
+    </redirectedRegister>
+    <redirectedRegister name="attReadback">
+      <targetDevice>ADC_BOARD</targetDevice>
+      <targetRegister>RTM/ATT_VAL</targetRegister>
+      <plugin name="forceReadOnly"/>
+      <plugin name="typeHintModifier">
+        <parameter name="type">int32</parameter>
+      </plugin>
+    </redirectedRegister>
+  </module>
 </logicalNameMap>
