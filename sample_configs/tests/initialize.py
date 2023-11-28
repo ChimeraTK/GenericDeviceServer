@@ -21,6 +21,7 @@ from configurations import *
 # Fetch the logger
 logger = logging.getLogger(__name__)
 
+
 def initialize(configuration):
 
     logger.info("Selected Configuration Properties: ")

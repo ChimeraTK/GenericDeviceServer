@@ -12,8 +12,6 @@ include_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "./includ
 sys.path.append(test_path)
 sys.path.append(include_path)
 
-from xdma_wrapper import xdma_wrapper
-
 from create_dmap import create_dmap
 
 # Initiate the logger
@@ -63,28 +61,29 @@ if args.regmap == "example":
     elif args.conf == "dwc8vm1" or args.conf == "dwc8vm1_w_rtm_clk":
         args.regmap = "example_dwc8vm1.mapp"
     else:
-        print("Unknown configuration selected! Choose either ds8vm1, dwc8vm1 or dwc8vm1_w_rtm_clk")
+        print(
+            "Unknown configuration selected! Choose either ds8vm1, dwc8vm1 or dwc8vm1_w_rtm_clk"
+        )
         sys.exit(1)
 
 # Create temperoray dmap file
 logging.info("Producing temporary dmap file")
-create_dmap(
-    reg_map_file=args.regmap, slot=args.slot, dummy_mode=False
-)
+create_dmap(reg_map_file=args.regmap, slot=args.slot, dummy_mode=False)
 
 if args.test == "adc_dac_test":
     logging.info("Initializing the FPGA and performing ADC and DAC test...\n")
     from adc_dac_test import adc_dac_test
+
     adc_dac_test(configuration=args.conf)
 elif args.test == "initialize":
     logging.info("Initializing the FPGA...\n")
     from initialize import initialize
+
     initialize(configuration=args.conf)
 elif args.test == "irq_test":
     logging.info("Performing PCIe Interrupt(IRQ) test:\n")
     from irq_test import irq_test
-    xdma_wrapper_device = xdma_wrapper(slot_number=args.slot)
-    irq_test(configuration=args.conf, xdma_wrapper_inst=xdma_wrapper_device)
+    irq_test(configuration=args.conf)
 else:
     print("Unknown test sequence")
     sys.exit(1)

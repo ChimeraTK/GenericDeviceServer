@@ -1,12 +1,8 @@
 #!/usr/bin/python3
-import mtca4u
 import time
 import sys
 import os
 import numpy as np
-from pyqtgraph.Qt import QtGui, QtCore
-import pyqtgraph as pg
-import pyqtgraph.exporters
 import logging
 from datetime import datetime
 import logging
@@ -29,7 +25,8 @@ raw_plot_file_name = "raw_adc_plot" + plot_extension
 # Fetch the logger
 logger = logging.getLogger(__name__)
 
-def irq_test(configuration, xdma_wrapper_inst):
+
+def irq_test(configuration):
 
     logger.info("Selected Configuration Properties: ")
     logger.info(str(configurations[configuration]))
@@ -49,22 +46,22 @@ def irq_test(configuration, xdma_wrapper_inst):
     # Initialize the board
     device.initialize_board()
 
-    # Enable the first IRQ channel.
+    # Enable the first IRQ channel. Example Design only uses the first 
+    # channel. Using other PCIe IRQ will not work.
     device.enable_irq(enable=1, channel=0)
 
     while True:
         start = time.time()
-        # TODO: use deviceaccess instead of custom xdma_wrapper
-        xdma_wrapper_inst.wait_irq(irq_channel=0)
+        device.wait_irq()
         end = time.time()
         duration = end - start
         freq = 1 / duration
         print(
             "Time between IRQ: "
             + f"{duration:3.6f}"
-            + " seconds.\tIRQ Arrival Frequency: "
+            + " seconds.\tIRQ Arrival Frequency (Hz): "
             + f"{freq:3.6f}"
-            + " Hz",
+            + "\n",
             end="\r",
             flush=True,
         )

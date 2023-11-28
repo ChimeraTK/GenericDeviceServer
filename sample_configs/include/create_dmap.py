@@ -2,6 +2,7 @@ import os
 
 DEVICE_ALIAS_REG = "device_reg"
 
+
 def create_dmap(slot, reg_map_file, dummy_mode: bool):
     """creates dmap file with given slot and map files.
 
@@ -20,10 +21,7 @@ def create_dmap(slot, reg_map_file, dummy_mode: bool):
 
         if dummy_mode:  # Use Dummy Backend
             dmap_file.write(
-                DEVICE_ALIAS_REG
-                + " (dummy?map=../include/"
-                + reg_map_file
-                + ")\n"
+                DEVICE_ALIAS_REG + " (dummy?map=../include/" + reg_map_file + ")\n"
             )
         else:  # Use PCIe (xdma) Backend
             dmap_file.write(

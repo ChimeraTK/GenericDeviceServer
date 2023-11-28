@@ -24,6 +24,7 @@ from configurations import *
 # Fetch the logger
 logger = logging.getLogger(__name__)
 
+
 def adc_dac_test(configuration):
 
     logger.info("Selected Configuration Properties: ")
@@ -96,9 +97,13 @@ class DynamicPlotter:
         # plots accordingly.
         for i in range(8):
             if i == 6:
-                self.p_raw.append(self.l1.addPlot(title="Reference Input Monitor".format(i)))
+                self.p_raw.append(
+                    self.l1.addPlot(title="Reference Input Monitor".format(i))
+                )
             elif i == 7:
-                self.p_raw.append(self.l1.addPlot(title="Vector Modulator Output Monitor".format(i)))
+                self.p_raw.append(
+                    self.l1.addPlot(title="Vector Modulator Output Monitor".format(i))
+                )
             else:
                 self.p_raw.append(self.l1.addPlot(title="Channel {}".format(i)))
             self.p_raw[i].setLabel("bottom", "Time", units="s")
@@ -115,7 +120,7 @@ class DynamicPlotter:
         daq0_data = self.device.read_daq()
         for i in range(8):
             self.curve_list[i].setData(
-                self.daq_x_axis, daq0_data[: self.device.dma_length, i]
+                self.daq_x_axis, daq0_data[i, : self.device.dma_length]
             )
 
     def run(self):
