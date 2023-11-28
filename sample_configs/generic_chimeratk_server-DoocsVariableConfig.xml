@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <device_server xmlns="https://github.com/ChimeraTK/ControlSystemAdapter-DoocsAdapter">
-  <location name="ADC_BOARD">
-    <import>/ADC_BOARD</import>
-  </location>
   <location name="ADC_LOGICAL">
     <import>/ADC_LOGICAL</import>
   </location>

@@ -1,0 +1,12 @@
+<logicalNameMap>
+    <module name="timing">
+        <redirectedRegister name="triggerCntIrq">
+          <targetDevice>ADC_BOARD</targetDevice>
+          <targetRegister>TIMING.TRIGGER_CNT_IRQ</targetRegister>
+        </redirectedRegister>
+        <redirectedRegister name="irq0">
+          <targetDevice>ADC_BOARD</targetDevice>
+          <targetRegister>IRQ</targetRegister>
+        </redirectedRegister>
+    </module>
+</logicalNameMap>

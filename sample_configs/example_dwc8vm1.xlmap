@@ -15,12 +15,36 @@
           <targetDevice>ADC_BOARD</targetDevice>
           <targetRegister>TIMING.TRIGGER_CNT</targetRegister>
         </redirectedRegister>
+        <redirectedRegister name="triggerCntIrq0">
+          <targetDevice>ADC_BOARD</targetDevice>
+          <targetRegister>TIMING.TRIGGER_CNT_IRQ</targetRegister>
+        </redirectedRegister>
+        <redirectedRegister name="irq0">
+          <targetDevice>ADC_BOARD</targetDevice>
+          <targetRegister>IRQ</targetRegister>
+        </redirectedRegister>
     </module>
+    <redirectedRegister name="doubleBuffered">
+        <targetDevice>ADC_BOARD</targetDevice>
+        <targetRegister>/DAQBUF/DAQ_CTRL_BUF0</targetRegister>
+        <plugin name="doubleBuffer">
+            <parameter name="secondBuffer">/DAQBUF/DAQ_CTRL_BUF1</parameter>
+            <parameter name="currentBufferNumber">/DAQ/ACTIVE_BUF</parameter>
+            <parameter name="enableDoubleBuffering">/DAQ/DOUBLE_BUF_ENA</parameter>
+            <parameter name="daqNumber">0</parameter>
+        </plugin>
+    </redirectedRegister>
     <module name="channels">
-        <redirectedChannel name="signal1">
+        <redirectedChannel name="signal10">
           <targetDevice>ADC_BOARD</targetDevice>
           <targetRegister>DAQBUF/DAQ_CTRL_BUF0</targetRegister>
-          <targetChannel>1</targetChannel>
+          <targetChannel>10</targetChannel>
+          <plugin name="typeHintModifier"><parameter name="type">int32</parameter></plugin>
+        </redirectedChannel>
+        <redirectedChannel name="signal10_db">
+          <targetDevice>this</targetDevice>
+          <targetRegister>/doubleBuffered</targetRegister>
+          <targetChannel>10</targetChannel>
           <plugin name="typeHintModifier"><parameter name="type">int32</parameter></plugin>
         </redirectedChannel>
     </module>
