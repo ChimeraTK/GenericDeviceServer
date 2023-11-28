@@ -2,7 +2,9 @@
 <csa:uamapping xmlns:csa="https://github.com/ChimeraTK/ControlSystemAdapter-OPC-UA-Adapter">
   <config>
     <server applicationName="ChimeraTK-GenericServer" port="4840"/>
-    <security unsecure="false" certificate="opcua_certs/server_cert.der" privatekey="opcua_certs/server_key.der" trustlist="opcua_certs/trust" blocklist="opcua_certs/blocklists" issuerlist="opcua_certs/issuer"/>
+    <security unsecure="false" certificate="opcua_certs/techlabcpullrfdev_cert.der" privatekey="opcua_certs/techlabcpullrfdev_key.der" trustlist="opcua_certs/trust" blocklist="opcua_certs/blocklists" issuerlist="opcua_certs/issuer"/>
+    <!-- security unsecure="false" certificate="opcua_certs/mskpcx29268_cert.der" privatekey="opcua_certs/mskpcx29268_key.der" trustlist="opcua_certs/trust" blocklist="opcua_certs/blocklists" issuerlist="opcua_certs/issuer"/-->
+    <!-- security unsecure="true" /-->
     <login username="user" password="test"/>
   </config>
   <process_variable sourceName="msTimer/tick" copy="true">
