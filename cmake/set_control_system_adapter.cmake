@@ -46,10 +46,16 @@ elseif(ADAPTER STREQUAL "EPICS7IOC")
   find_package(ChimeraTK-ControlSystemAdapter-EPICS7-IOC-Adapter 02.01 REQUIRED)
   set_target_properties(ChimeraTK::ChimeraTK-ControlSystemAdapter-EPICS7-IOC-Adapter PROPERTIES IMPORTED_GLOBAL TRUE)
   add_library(ChimeraTK::SelectedAdapter ALIAS ChimeraTK::ChimeraTK-ControlSystemAdapter-EPICS7-IOC-Adapter)
+elseif(ADAPTER STREQUAL "TANGO")
+  message("Building against Tango (experimental!)")
+  find_package(ChimeraTK-ControlSystemAdapter-TangoAdapter 01.00 REQUIRED)
+  set_target_properties(ChimeraTK::ChimeraTK-ControlSystemAdapter-TangoAdapter PROPERTIES IMPORTED_GLOBAL TRUE)
+  add_library(ChimeraTK::SelectedAdapter ALIAS ChimeraTK::ChimeraTK-ControlSystemAdapter-TangoAdapter)
 else()
   message(FATAL_ERROR "Please select your ControlSystemAdapter to use by passing to the cmake command line:\n"
                       "   -DADAPTER=DOOCS to build a DOOCS server\n"
                       "   -DADAPTER=OPCUA to build an OPC UA server\n"
+                      "   -DADAPTER=TANGO to build a Tango server (experimental!)\n"
                       "   -DADAPTER=EPICSIOC to build an EPICS ver. 3.16 IOC\n"
                       "   -DADAPTER=EPICS7IOC to build an EPICS ver. 7.0 IOC")
 endif()
