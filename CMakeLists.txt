@@ -50,7 +50,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 # library for code shared between server executable and tests
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-add_library(${PROJECT_NAME}_impl SHARED ${library_sources} )
+add_library(${PROJECT_NAME}_impl STATIC ${library_sources} )
 target_link_libraries(${PROJECT_NAME}_impl ChimeraTK::ChimeraTK-ApplicationCore)
 
 # main server executable
