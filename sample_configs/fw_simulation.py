@@ -2,6 +2,7 @@
 
 import deviceaccess as da
 import numpy as np
+import time
 
 da.setDMapFilePath('devices.dmap')
 d = da.Device('ADC_BOARD')
@@ -17,6 +18,8 @@ doubleBufEna = d.getOneDRegisterAccessor(np.uint32, '/DAQ/DOUBLE_BUF_ENA')
 buf0Acc = d.getTwoDRegisterAccessor(np.int32, 'DAQBUF/DAQ_CTRL_BUF0/DUMMY_WRITEABLE')
 buf1Acc = d.getTwoDRegisterAccessor(np.int32, 'DAQBUF/DAQ_CTRL_BUF1/DUMMY_WRITEABLE')
 
+first_time = time.time()
+loopCount = 0
 while True :
     triggerCounters[1] += 1
     triggerCounters.write()
@@ -43,3 +46,7 @@ while True :
         #print ("switch buffer")
         activeBuf[0] = 1 - activeBuf[0]
         activeBuf.write()
+        
+    loopCount += 1
+    cur_time = time.time()
+    time.sleep(max(loopCount*0.100 - (cur_time - first_time), 0))

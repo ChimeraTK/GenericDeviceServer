@@ -16,10 +16,6 @@
       <targetDevice>ADC_BOARD</targetDevice>
       <targetRegister>TIMING.TRIGGER_CNT</targetRegister>
     </redirectedRegister>
-    <redirectedRegister name="triggerCntIrq0">
-      <targetDevice>ADC_BOARD</targetDevice>
-      <targetRegister>TIMING.TRIGGER_CNT_IRQ</targetRegister>
-    </redirectedRegister>
     <redirectedRegister name="irq0">
       <targetDevice>ADC_BOARD</targetDevice>
       <targetRegister>IRQ</targetRegister>
@@ -36,7 +32,7 @@
     </plugin>
   </redirectedRegister>
   <module name="channels">
-    <redirectedChannel name="signal10">
+    <redirectedChannel name="signal10_singleBuff">
       <targetDevice>ADC_BOARD</targetDevice>
       <targetRegister>DAQBUF/DAQ_CTRL_BUF0</targetRegister>
       <targetChannel>10</targetChannel>
@@ -44,7 +40,7 @@
         <parameter name="type">int32</parameter>
       </plugin>
     </redirectedChannel>
-    <redirectedChannel name="signal10_db">
+    <redirectedChannel name="signal10_doubleBuff">
       <targetDevice>this</targetDevice>
       <targetRegister>/doubleBuffered</targetRegister>
       <targetChannel>10</targetChannel>
