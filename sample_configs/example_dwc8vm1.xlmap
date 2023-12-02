@@ -5,9 +5,9 @@
       <targetDevice>ADC_BOARD</targetDevice>
       <targetRegister>BSP/PRJ_VERSION</targetRegister>
     </redirectedRegister>
-    <redirectedRegister name="scratch">
+    <redirectedRegister name="clockDivider">
       <targetDevice>ADC_BOARD</targetDevice>
-      <targetRegister>BSP/SCRATCH</targetRegister>
+      <targetRegister>TIMING/DIVIDER_VALUE</targetRegister>
       <plugin name="forceReadOnly"/>
     </redirectedRegister>
   </module>
