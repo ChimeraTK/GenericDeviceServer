@@ -21,7 +21,7 @@
       <targetRegister>IRQ</targetRegister>
     </redirectedRegister>
   </module>
-  <redirectedRegister name="doubleBuffered">
+  <redirectedRegister name="daqData0">
     <targetDevice>ADC_BOARD</targetDevice>
     <targetRegister>/DAQBUF/DAQ_CTRL_BUF0</targetRegister>
     <plugin name="doubleBuffer">
@@ -42,7 +42,7 @@
     </redirectedChannel>
     <redirectedChannel name="signal10_doubleBuff">
       <targetDevice>this</targetDevice>
-      <targetRegister>/doubleBuffered</targetRegister>
+      <targetRegister>/daqData0</targetRegister>
       <targetChannel>10</targetChannel>
       <plugin name="typeHintModifier">
         <parameter name="type">int32</parameter>

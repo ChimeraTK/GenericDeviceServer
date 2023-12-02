@@ -14,7 +14,8 @@ triggerCounters = d.getOneDRegisterAccessor(np.uint32, 'TIMING/TRIGGER_CNT_IRQ',
 # read initial value: this is polled
 triggerCounters.read()
 
+print ('waiting on TRIGGER_CNT_IRQ')
 while True :
     triggerCounters.read()
-    print('Trigger, counter[2] = ' + str(triggerCounters[2]))
+    print('Trigger, counter[1] = ' + str(triggerCounters[1]))
     

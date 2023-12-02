@@ -20,6 +20,8 @@ buf1Acc = d.getTwoDRegisterAccessor(np.int32, 'DAQBUF/DAQ_CTRL_BUF1/DUMMY_WRITEA
 
 first_time = time.time()
 loopCount = 0
+
+print ('entering fw simulation loop')
 while True :
     triggerCounters[1] += 1
     triggerCounters.write()

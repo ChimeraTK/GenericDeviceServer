@@ -1,4 +1,3 @@
 #ADC_BOARD (xdma:xdma/slot3?map=example_dwc8vm1.mapp)
 ADC_BOARD (sharedMemoryDummy?map=example_dwc8vm1.mapp)
 ADC_LOGICAL (logicalNameMap?map=example_dwc8vm1.xlmap)
-#ADC_INTR (logicalNameMap?map=user_irq.xlmap)
