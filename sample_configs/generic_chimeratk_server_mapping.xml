@@ -6,7 +6,7 @@
     <!--security certificate="opcua_certs/mskpcx29268_cert.der" privatekey="opcua_certs/mskpcx29268_key.der" trustlist="opcua_certs/trust" blocklist="opcua_certs/blocklists" issuerlist="opcua_certs/issuer"/-->
     <!--login username="user" password="test"/-->
   </config>
-  <process_variable sourceName="msTimer/tick" copy="true">
+  <process_variable sourceName="ADC_LOGICAL/timing/triggerCnt" copy="true">
     <name>triggerCounter</name>
     <destination>NewFolder</destination>
   </process_variable>

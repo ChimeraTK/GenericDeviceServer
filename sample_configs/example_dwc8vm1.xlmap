@@ -69,9 +69,6 @@
         <parameter name="formula"> f*x </parameter>
         <parameter name="f">/attenuator/attFactor</parameter>
       </plugin>
-      <plugin name="typeHintModifier">
-        <parameter name="type">int32</parameter>
-      </plugin>
     </redirectedRegister>
     <redirectedRegister name="attReadback">
       <targetDevice>ADC_BOARD</targetDevice>
