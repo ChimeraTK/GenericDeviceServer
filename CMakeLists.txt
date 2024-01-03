@@ -1,25 +1,27 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(PROJECT_BASE_NAME generic-chimeratk-server)
+project(ChimeraTK-Generic-Device-Server)
+
+set(EXE_BASE_NAME generic-chimeratk-server)
 # Unfortunately application core does not allow hyphens in the app name. Have to use underscore.
 set(CHIMERATK_APP_NAME generic_chimeratk_server)
 
 if(ADAPTER STREQUAL "OPCUA")
-  set(PROJECT_NAME_PREFIX opcua-)
+  set(EXE_NAME_PREFIX opcua-)
 elseif(ADAPTER STREQUAL "DOOCS")
-  set(PROJECT_NAME_PREFIX doocs-)
+  set(EXE_NAME_PREFIX doocs-)
 elseif(ADAPTER STREQUAL "EPICSIOC")
-  set(PROJECT_NAME_PREFIX epics-)
+  set(EXE_NAME_PREFIX epics-)
 elseif(ADAPTER STREQUAL "EPICS7IOC")
-  set(PROJECT_NAME_PREFIX epics7-)
+  set(EXE_NAME_PREFIX epics7-)
 endif()
 
-set(${PROJECT_BASE_NAME}_MAJOR_VERSION 01)
-set(${PROJECT_BASE_NAME}_MINOR_VERSION 03)
-set(${PROJECT_BASE_NAME}_PATCH_VERSION 00)
+set(${PROJECT_NAME}_MAJOR_VERSION 01)
+set(${PROJECT_NAME}_MINOR_VERSION 04)
+set(${PROJECT_NAME}_PATCH_VERSION 00)
 include(${CMAKE_SOURCE_DIR}/cmake/set_version_numbers.cmake)
 
-project(${PROJECT_NAME_PREFIX}${PROJECT_BASE_NAME}${${PROJECT_BASE_NAME}_MAJOR_VERSION})
+set(EXE_NAME ${EXE_NAME_PREFIX}${EXE_BASE_NAME}${${PROJECT_NAME}_MAJOR_VERSION})
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
@@ -50,24 +52,23 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 # library for code shared between server executable and tests
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-add_library(${PROJECT_NAME}_impl SHARED ${library_sources} )
-target_link_libraries(${PROJECT_NAME}_impl ChimeraTK::ChimeraTK-ApplicationCore)
+add_library(${EXE_NAME}_impl SHARED ${library_sources})
+target_link_libraries(${EXE_NAME}_impl ChimeraTK::ChimeraTK-ApplicationCore)
 
 # main server executable
-add_executable(${PROJECT_NAME} ${server_sources})
-target_link_libraries(${PROJECT_NAME} PUBLIC ${PROJECT_NAME}_impl
+add_executable(${EXE_NAME} ${server_sources})
+target_link_libraries(${EXE_NAME} PUBLIC ${EXE_NAME}_impl
                       PRIVATE ChimeraTK::SelectedAdapter
                       PRIVATE ChimeraTK::ChimeraTK-DeviceAccess-DoocsBackend)
 
-add_executable(${PROJECT_NAME}-xmlGenerator ${server_sources})
-target_compile_options(${PROJECT_NAME}-xmlGenerator PRIVATE "-DGENERATE_XML")
-target_link_libraries(${PROJECT_NAME}-xmlGenerator PUBLIC ${PROJECT_NAME}_impl
+add_executable(${EXE_NAME}-xmlGenerator ${server_sources})
+target_compile_options(${EXE_NAME}-xmlGenerator PRIVATE "-DGENERATE_XML")
+target_link_libraries(${EXE_NAME}-xmlGenerator PUBLIC ${EXE_NAME}_impl
                       PRIVATE ChimeraTK::ChimeraTK-DeviceAccess-DoocsBackend)
 
 # copy example configuration to build directory - this is also needed for the tests
 # The doocs server config and doocs adapter config
-file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/doocs-${PROJECT_BASE_NAME}${${PROJECT_BASE_NAME}_MAJOR_VERSION}.conf 
-     DESTINATION ${PROJECT_BINARY_DIR}/${PROJECT_NAME_PREFIX}${PROJECT_BASE_NAME}.conf)
+file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${EXE_NAME}.conf DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}-DoocsVariableConfig.xml DESTINATION ${PROJECT_BINARY_DIR})
 # The application configuration and map/dmap files
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}_configuration.xml DESTINATION ${PROJECT_BINARY_DIR})
@@ -80,7 +81,7 @@ find_package(Boost COMPONENTS unit_test_framework)
 # Test executables and helper scripts
 foreach(target writeWordStatus testGenericServer)
     add_executable(${target} tests/${target}.cc)
-    target_link_libraries(${target} PUBLIC ${PROJECT_NAME}_impl
+    target_link_libraries(${target} PUBLIC ${EXE_NAME}_impl
                           PRIVATE Boost::unit_test_framework)
 endforeach()
 
@@ -89,6 +90,6 @@ enable_testing()
 add_test(testGenericServer ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/testGenericServer)
 
 #install executables
-install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
+install(TARGETS ${EXE_NAME} RUNTIME DESTINATION bin)
 # install library
-install(FILES ${PROJECT_BINARY_DIR}/lib${PROJECT_NAME}_impl.so DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
+install(FILES ${PROJECT_BINARY_DIR}/lib${EXE_NAME}_impl.so DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
