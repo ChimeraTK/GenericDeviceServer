@@ -51,7 +51,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 # library for code shared between server executable and tests
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-add_library(${EXE_NAME}_impl SHARED ${library_sources})
+add_library(${EXE_NAME}_impl ${library_sources})
 target_link_libraries(${EXE_NAME}_impl ChimeraTK::ChimeraTK-ApplicationCore)
 
 # main server executable
@@ -77,8 +77,7 @@ find_package(Boost COMPONENTS unit_test_framework)
 # Test executables and helper scripts
 foreach(target writeWordStatus testGenericServer)
     add_executable(${target} tests/${target}.cc)
-    target_link_libraries(${target} PUBLIC ${EXE_NAME}_impl
-                          PRIVATE Boost::unit_test_framework)
+    target_link_libraries(${target} PUBLIC ${EXE_NAME}_impl PRIVATE Boost::unit_test_framework)
 endforeach()
 
 enable_testing()
@@ -87,5 +86,3 @@ add_test(testGenericServer ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/testGenericServer)
 
 #install executables
 install(TARGETS ${EXE_NAME} RUNTIME DESTINATION bin)
-# install library
-install(FILES ${PROJECT_BINARY_DIR}/lib${EXE_NAME}_impl.so DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
