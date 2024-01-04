@@ -40,7 +40,6 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 include(cmake/enable_code_coverage_report.cmake)
 include(cmake/set_control_system_adapter.cmake)
 find_package(ChimeraTK-ApplicationCore 03.00 REQUIRED)
-find_package(ChimeraTK-DeviceAccess-DoocsBackend 01.04 REQUIRED)
 
 aux_source_directory(${CMAKE_SOURCE_DIR}/server server_sources)
 aux_source_directory(${CMAKE_SOURCE_DIR}/src library_sources)
@@ -57,14 +56,11 @@ target_link_libraries(${EXE_NAME}_impl ChimeraTK::ChimeraTK-ApplicationCore)
 
 # main server executable
 add_executable(${EXE_NAME} ${server_sources})
-target_link_libraries(${EXE_NAME} PUBLIC ${EXE_NAME}_impl
-                      PRIVATE ChimeraTK::SelectedAdapter
-                      PRIVATE ChimeraTK::ChimeraTK-DeviceAccess-DoocsBackend)
+target_link_libraries(${EXE_NAME} PUBLIC ${EXE_NAME}_impl PRIVATE ChimeraTK::SelectedAdapter)
 
 add_executable(${EXE_NAME}-xmlGenerator ${server_sources})
 target_compile_options(${EXE_NAME}-xmlGenerator PRIVATE "-DGENERATE_XML")
-target_link_libraries(${EXE_NAME}-xmlGenerator PUBLIC ${EXE_NAME}_impl
-                      PRIVATE ChimeraTK::ChimeraTK-DeviceAccess-DoocsBackend)
+target_link_libraries(${EXE_NAME}-xmlGenerator PUBLIC ${EXE_NAME}_impl)
 
 # copy example configuration to build directory - this is also needed for the tests
 # The doocs server config and doocs adapter config
