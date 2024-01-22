@@ -18,7 +18,7 @@ endif()
 
 set(${PROJECT_NAME}_MAJOR_VERSION 01)
 set(${PROJECT_NAME}_MINOR_VERSION 04)
-set(${PROJECT_NAME}_PATCH_VERSION 00)
+set(${PROJECT_NAME}_PATCH_VERSION 01)
 include(${CMAKE_SOURCE_DIR}/cmake/set_version_numbers.cmake)
 
 set(EXE_NAME ${EXE_NAME_PREFIX}${EXE_BASE_NAME})
@@ -64,8 +64,10 @@ target_link_libraries(${EXE_NAME}-xmlGenerator PUBLIC ${EXE_NAME}_impl)
 
 # copy example configuration to build directory - this is also needed for the tests
 # The doocs server config and doocs adapter config
-file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${EXE_NAME}.conf DESTINATION ${PROJECT_BINARY_DIR})
-file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}-DoocsVariableConfig.xml DESTINATION ${PROJECT_BINARY_DIR})
+if(ADAPTER STREQUAL "DOOCS")
+  file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${EXE_NAME}.conf DESTINATION ${PROJECT_BINARY_DIR})
+  file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}-DoocsVariableConfig.xml DESTINATION ${PROJECT_BINARY_DIR})
+endif()  
 # The application configuration and map/dmap files
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}_configuration.xml DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/devices.dmap DESTINATION ${PROJECT_BINARY_DIR})
