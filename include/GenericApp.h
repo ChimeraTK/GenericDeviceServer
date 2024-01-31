@@ -6,6 +6,9 @@
 #include <ChimeraTK/ApplicationCore/ApplicationCore.h>
 #include <ChimeraTK/ApplicationCore/PeriodicTrigger.h>
 #include <ChimeraTK/ApplicationCore/ScriptedInitialisationHandler.h>
+#ifdef WITH_DAQ
+#  include <ChimeraTK/ApplicationCore/MicroDAQ.h>
+#endif
 
 namespace ctk = ChimeraTK;
 
@@ -24,4 +27,9 @@ struct GenericApp : public ctk::Application {
   };
 
   std::vector<DeviceModuleGroup> deviceModules;
+
+#ifdef WITH_DAQ
+  ctk::MicroDAQ<uint64_t> daq;
+  void initialise() override;
+#endif
 };

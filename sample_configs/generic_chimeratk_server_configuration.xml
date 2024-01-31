@@ -7,6 +7,7 @@
     <variable name="triggerPath" type="string" value="/msTimer/tick" />
     <variable name="pathInDevice" type="string" value="/BSP" />
     <variable name="initScript" type="string" value="./writeWordStatus" />
+    <variable name="enableDAQ" type="boolean" value="true" />
  </module>
  
   <module name="TMCB2">
@@ -21,6 +22,16 @@
   
   <module name="msTimer">
     <variable name="period" type="uint32" value="1000" />
+  </module>
+
+  <module name="Configuration">
+    <module name="MicroDAQ">
+      <variable name="enable" type="boolean" value="true"/>
+      <variable name="outputFormat" type="string" value="hdf5"/>
+      <variable name="decimationFactor" type="uint32" value="10"/>
+      <variable name="decimationThreshold" type="uint32" value="200000"/>
+      <variable name="triggerPath" type="string" value="/msTimer/tick" />    
+    </module>
   </module>
 
 </configuration>
