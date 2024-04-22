@@ -4,5 +4,6 @@
 #include "GenericApp.h"
 
 #include <ChimeraTK/ApplicationCore/EnableXMLGenerator.h>
+#include <ChimeraTK/ControlSystemAdapter/ApplicationFactory.h>
 
-static GenericApp theGenericApp;
+static ChimeraTK::ApplicationFactory<GenericApp> theFactory;
