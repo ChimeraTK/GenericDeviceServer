@@ -42,6 +42,7 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 include(cmake/enable_code_coverage_report.cmake)
 include(cmake/set_control_system_adapter.cmake)
 find_package(ChimeraTK-ApplicationCore 03.00 REQUIRED)
+find_package(ChimeraTK-ApplicationCore-MicroDAQ 02.00)
 
 aux_source_directory(${CMAKE_SOURCE_DIR}/server server_sources)
 aux_source_directory(${CMAKE_SOURCE_DIR}/src library_sources)
@@ -54,7 +55,13 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 add_library(${EXE_NAME}_impl ${library_sources})
-target_link_libraries(${EXE_NAME}_impl ChimeraTK::ChimeraTK-ApplicationCore)
+
+IF(ChimeraTK-ApplicationCore-MicroDAQ_FOUND)
+  target_compile_options(${EXE_NAME}_impl PRIVATE "-DWITH_DAQ")
+  target_link_libraries(${EXE_NAME}_impl ChimeraTK::ChimeraTK-ApplicationCore ChimeraTK::ChimeraTK-ApplicationCore-MicroDAQ)
+ELSE()
+  target_link_libraries(${EXE_NAME}_impl ChimeraTK::ChimeraTK-ApplicationCore)  
+ENDIF(ChimeraTK-ApplicationCore-MicroDAQ_FOUND)
 
 # main server executable
 add_executable(${EXE_NAME} ${server_sources})
