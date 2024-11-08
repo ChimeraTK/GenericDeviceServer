@@ -18,12 +18,12 @@ elseif(ADAPTER STREQUAL "TANGO")
   set(EXE_NAME_PREFIX tango-)
 endif()
 
-set(${PROJECT_NAME}_MAJOR_VERSION 01)
-set(${PROJECT_NAME}_MINOR_VERSION 05)
-set(${PROJECT_NAME}_PATCH_VERSION 00)
+set(${PROJECT_NAME}_MAJOR_VERSION 02)
+set(${PROJECT_NAME}_MINOR_VERSION 00)
+set(${PROJECT_NAME}_PATCH_VERSION 01)
 include(${CMAKE_SOURCE_DIR}/cmake/set_version_numbers.cmake)
 
-set(EXE_NAME ${EXE_NAME_PREFIX}${EXE_BASE_NAME})
+set(EXE_NAME ${EXE_NAME_PREFIX}${EXE_BASE_NAME}${${PROJECT_NAME}_MAJOR_VERSION})
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
@@ -71,7 +71,7 @@ if(ADAPTER STREQUAL "DOOCS")
   file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}-DoocsVariableConfig.xml DESTINATION ${PROJECT_BINARY_DIR})
 endif()  
 # The application configuration and map/dmap files
-file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}_configuration.xml DESTINATION ${PROJECT_BINARY_DIR})
+file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}-config.xml DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/devices.dmap DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/initscript.sh DESTINATION ${PROJECT_BINARY_DIR})
