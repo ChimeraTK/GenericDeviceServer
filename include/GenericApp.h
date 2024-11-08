@@ -13,7 +13,6 @@ struct GenericApp : public ctk::Application {
   GenericApp();
   ~GenericApp() override;
 
-  ctk::ConfigReader config{this, "Config", getName() + "_configuration.xml"};
   std::vector<ctk::PeriodicTrigger> periodicTriggers;
 
   struct DeviceModuleGroup : public ctk::ModuleGroup {

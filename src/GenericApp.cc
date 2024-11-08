@@ -14,6 +14,7 @@ GenericApp::DeviceModuleGroup::DeviceModuleGroup(ctk::ModuleGroup* owner, std::s
 GenericApp::GenericApp() : Application("generic_chimeratk_server") {
   ChimeraTK::setDMapFilePath("devices.dmap");
 
+  auto& config = appConfig();
   std::vector<std::string> timers = config.get<std::vector<std::string>>("periodicTimers");
   for(const std::string& timer : timers) {
     periodicTriggers.emplace_back(
