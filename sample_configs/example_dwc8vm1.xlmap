@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<logicalNameMap>
+  <module name="board">
+    <redirectedRegister name="version">
+      <targetDevice>ADC_BOARD</targetDevice>
+      <targetRegister>BSP/PRJ_VERSION</targetRegister>
+    </redirectedRegister>
+    <redirectedRegister name="clockDivider">
+      <targetDevice>ADC_BOARD</targetDevice>
+      <targetRegister>TIMING/DIVIDER_VALUE</targetRegister>
+      <plugin name="forceReadOnly"/>
+    </redirectedRegister>
+  </module>
+  <module name="timing">
+    <redirectedRegister name="triggerCnt">
+      <targetDevice>ADC_BOARD</targetDevice>
+      <targetRegister>TIMING.TRIGGER_CNT</targetRegister>
+    </redirectedRegister>
+    <redirectedRegister name="trigger">
+      <targetDevice>ADC_BOARD</targetDevice>
+      <targetRegister>APP.ISR.TRIGGER</targetRegister>
+    </redirectedRegister>
+  </module>
+  <module name="channels">
+    <redirectedChannel name="signal10">
+      <targetDevice>ADC_BOARD</targetDevice>
+      <targetRegister>DAQBUF/DAQ_CTRL_BUF0</targetRegister>
+      <targetChannel>10</targetChannel>
+      <plugin name="typeHintModifier">
+        <parameter name="type">int32</parameter>
+      </plugin>
+    </redirectedChannel>
+  </module>
+  <module name="attenuator">
+    <redirectedRegister name="attSelectionMask">
+      <targetDevice>ADC_BOARD</targetDevice>
+      <targetRegister>RTM/ATT_SEL</targetRegister>
+      <plugin name="typeHintModifier">
+        <parameter name="type">uint16</parameter>
+      </plugin>
+    </redirectedRegister>
+    <variable name="attFactor">
+      <type>float32</type>
+      <value>0</value>
+    </variable>
+    <redirectedRegister name="attSetpoint">
+      <targetDevice>ADC_BOARD</targetDevice>
+      <targetRegister>RTM/ATT_VAL</targetRegister>
+      <plugin name="math">
+        <parameter name="enable_push_parameters"/>
+        <parameter name="formula"> f*x </parameter>
+        <parameter name="f">/attenuator/attFactor</parameter>
+      </plugin>
+    </redirectedRegister>
+    <redirectedRegister name="attReadback">
+      <targetDevice>ADC_BOARD</targetDevice>
+      <targetRegister>RTM/ATT_VAL</targetRegister>
+      <plugin name="forceReadOnly"/>
+      <plugin name="typeHintModifier">
+        <parameter name="type">int32</parameter>
+      </plugin>
+    </redirectedRegister>
+  </module>
+</logicalNameMap>

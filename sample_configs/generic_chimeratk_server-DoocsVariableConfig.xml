@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <device_server xmlns="https://github.com/ChimeraTK/ControlSystemAdapter-DoocsAdapter">
-  <location name="CH1.MO.TMCB">
-    <import>/TMCB1</import>
-  </location>
-  <location name="CH2.MO.TMCB">
-    <import>/TMCB2</import>
+  <location name="ADC">
+    <import>/ADC</import>
   </location>
   <location name="EverythingElse">
     <import>/</import>

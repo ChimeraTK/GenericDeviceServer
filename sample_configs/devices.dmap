@@ -1,4 +1,3 @@
-#TMCB1      sdm://./rebot=192.168.115.240,5001 rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp
-#TMCB2      sdm://./rebot=192.168.115.186,5001 rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp
-TMCB1  (sharedMemoryDummy:1?map=rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp)
-TMCB2  (sharedMemoryDummy:2?map=rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp)
+#ADC_BOARD (xdma:xdma/slot4?map=sis8300ku_example_design_dwc8vm1_2.4.0-1-g1abe78b6.mapp)
+ADC_BOARD (sharedMemoryDummy?map=sis8300ku_example_design_dwc8vm1_2.4.0-1-g1abe78b6.mapp)
+ADC (logicalNameMap?map=example_dwc8vm1.xlmap)

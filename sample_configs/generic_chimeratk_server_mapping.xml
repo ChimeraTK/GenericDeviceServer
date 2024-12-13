@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<csa:uamapping xmlns:csa="https://github.com/ChimeraTK/ControlSystemAdapter-OPC-UA-Adapter">
+  <config>
+    <server applicationName="ADC_DemoServer" port="4840"/>
+    <!--security certificate="opcua_certs/techlabcpullrfdev_cert.der" privatekey="opcua_certs/techlabcpullrfdev_key.der" trustlist="opcua_certs/trust" blocklist="opcua_certs/blocklists" issuerlist="opcua_certs/issuer"/-->
+    <!--security certificate="opcua_certs/lat7400_cert.der" privatekey="opcua_certs/lat7400_key.der" trustlist="opcua_certs/trust" blocklist="opcua_certs/blocklists" issuerlist="opcua_certs/issuer"/-->
+    <!--login username="user" password="test"/-->
+  </config>
+  <process_variable sourceName="ADC/timing/triggerCnt" copy="true">
+    <name>triggerCounter</name>
+    <destination>NewFolder</destination>
+  </process_variable>
+</csa:uamapping>

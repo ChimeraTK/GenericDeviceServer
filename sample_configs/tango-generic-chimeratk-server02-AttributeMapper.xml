@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deviceServer>
+    <deviceClass name="ADC">
+        <description>ADC Module for Demonstrator</description>
+        <deviceInstance name="demo/adc/0">
+            <import>/ADC</import>
+        </deviceInstance>
+    </deviceClass>
+    <deviceClass name="Supervision">
+        <title>SupervisionModule</title>
+        <description>Supervision module for demonstrator</description>
+        <deviceInstance name="demo/adc/supervision">
+            <import>/</import>
+        </deviceInstance>
+    </deviceClass>
+</deviceServer>

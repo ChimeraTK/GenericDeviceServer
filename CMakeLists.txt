@@ -64,17 +64,9 @@ add_executable(${EXE_NAME}-xmlGenerator ${server_sources})
 target_compile_options(${EXE_NAME}-xmlGenerator PRIVATE "-DGENERATE_XML")
 target_link_libraries(${EXE_NAME}-xmlGenerator PUBLIC ${EXE_NAME}_impl)
 
-# copy example configuration to build directory - this is also needed for the tests
-# The doocs server config and doocs adapter config
-if(ADAPTER STREQUAL "DOOCS")
-  file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${EXE_NAME}.conf DESTINATION ${PROJECT_BINARY_DIR})
-  file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}-DoocsVariableConfig.xml DESTINATION ${PROJECT_BINARY_DIR})
-endif()  
 # The application configuration and map/dmap files
-file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}-config.xml DESTINATION ${PROJECT_BINARY_DIR})
-file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/devices.dmap DESTINATION ${PROJECT_BINARY_DIR})
-file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/rfsync_mo13synth_flmo_0.0.0-75-g063b93e1.mapp DESTINATION ${PROJECT_BINARY_DIR})
-file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/initscript.sh DESTINATION ${PROJECT_BINARY_DIR})
+file(GLOB CONIG_FILES ${CMAKE_SOURCE_DIR}/sample_configs/*)
+file(COPY ${CONFIG_FILES} DESTINATION ${PROJECT_BINARY_DIR})
 
 find_package(Boost COMPONENTS unit_test_framework)
 

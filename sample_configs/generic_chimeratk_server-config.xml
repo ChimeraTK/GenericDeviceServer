@@ -1,26 +1,25 @@
+<?xml version="1.0"?>
 <configuration>
-  <variable name="devices" type="string">
-    <value i="0"  v="TMCB1"/>
-    <value i="1"  v="TMCB2"/>
-  </variable>
- <module name="TMCB1">
-    <variable name="triggerPath" type="string" value="/msTimer/tick" />
-    <variable name="pathInDevice" type="string" value="/BSP" />
-    <variable name="initScript" type="string" value="./writeWordStatus" />
- </module>
- 
-  <module name="TMCB2">
-    <variable name="triggerPath" type="string" value="/manual/trigger" />
-    <variable name="pathInDevice" type="string" value="" />
-    <variable name="initScript" type="string" value="" />
- </module>
-
-  <variable name="periodicTimers" type="string">
-    <value i="0"  v="msTimer"/>
-  </variable>
-  
-  <module name="msTimer">
-    <variable name="period" type="uint32" value="1000" />
-  </module>
-
+    <variable name="devices" type="string">
+        <value i="0" v="ADC"/>
+    </variable>
+    <module name="ADC">
+        <variable name="triggerPath" type="string" value="/ADC/timing/trigger"/>
+        <!-- variable name="triggerPath" type="string" value="/msTimer/tick" /-->
+        <variable name="pathInDevice" type="string" value=""/>
+        <variable name="initScript" type="string" value="./initscript.py"/>
+    </module>
+    <variable name="periodicTimers" type="string">
+        <value i="0" v="msTimer"/>
+    </variable>
+    <module name="msTimer">
+        <variable name="period" type="uint32" value="1000"/>
+    </module>
+    <!-- this defines user-defined python application modules to load at server start.
+    List all your python modules as <module>. -->
+    <module name="PythonModules">
+        <module name="UserAppModules">
+            <variable name="path" type="string" value="LogicExample" />
+        </module>
+    </module>
 </configuration>
