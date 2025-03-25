@@ -3,6 +3,8 @@
 
 #include "GenericApp.h"
 
+#include <ChimeraTK/Exception.h>
+
 GenericApp::DeviceModuleGroup::DeviceModuleGroup(ctk::ModuleGroup* owner, std::string alias, std::string triggerPath,
     std::string pathInDevice, std::string initScript)
 : ModuleGroup(owner, alias, ""), _deviceModule(this, alias, triggerPath, nullptr, pathInDevice) {
@@ -15,13 +17,24 @@ GenericApp::GenericApp() : Application("generic_chimeratk_server") {
   ChimeraTK::setDMapFilePath("devices.dmap");
 
   auto& config = appConfig();
-  std::vector<std::string> timers = config.get<std::vector<std::string>>("periodicTimers");
+  std::vector<std::string> timers;
+  try {
+    timers = config.get<std::vector<std::string>>("periodicTimers");
+  }
+  catch(const ctk::logic_error&) {
+    // No periodic timers entry, nothing to do. Just catch the exception and leave the list empty.
+  }
   for(const std::string& timer : timers) {
-    periodicTriggers.emplace_back(
-        ctk::PeriodicTrigger(this, timer, "Periodic timer", config.get<uint32_t>(timer + "/period")));
+    periodicTriggers.emplace_back(this, timer, "Periodic timer", config.get<uint32_t>(timer + "/period"));
   }
 
-  std::vector<std::string> devices = config.get<std::vector<std::string>>("devices");
+  std::vector<std::string> devices;
+  try {
+    devices = config.get<std::vector<std::string>>("devices");
+  }
+  catch(const ctk::logic_error&) {
+    // No devices, nothing to do. Just catch the exception and leave the list empty.
+  }
   for(const std::string& device : devices) {
     deviceModules.emplace_back(this, device, config.get<std::string>(device + "/triggerPath"),
         config.get<std::string>(device + "/pathInDevice"), config.get<std::string>(device + "/initScript"));
