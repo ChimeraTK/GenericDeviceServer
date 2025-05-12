@@ -3,8 +3,8 @@
 The Generic Device Server is a simple ApplicationCore Server that supports
 exposing devices to a control system. Simple application logic, such as value
 conversions, can be achieved using a
-[LogicalNameMapped device](https://chimeratk.github.io/DeviceAccess/master/lmap.html)
-and the [math plugin](https://chimeratk.github.io/DeviceAccess/master/lmap.html#plugins_reference_math)
+[LogicalNameMapped device](https://chimeratk.github.io/ChimeraTK-DeviceAccess/head/html/lmap.html)
+and the [math plugin](https://chimeratk.github.io/ChimeraTK-DeviceAccess/head/html/lmap.html#plugins_reference_math)
 
 ## Building
 
@@ -151,7 +151,7 @@ Additional configuration of variable mapping can be done through the DOOCS varia
 `generic_chimeratk_server-DoocsVariableConfig.xml`.
 
 For details on both, refer to the [documentation of the DOOCS
-control system adapter](https://chimeratk.github.io/ControlSystemAdapter-DoocsAdapter/master/index.html#Integration)
+control system adapter](https://chimeratk.github.io/ChimeraTK-ControlSystemAdapter-DoocsAdapter/head/html/index.html#Integration)
 
 #### EPICS
 
@@ -163,3 +163,8 @@ The mapping file for OPC-UA has to be named
 `generic_chimeratk_server_mapping.xml`.
 
 For further details on the format, refer to the [example configuration](https://github.com/ChimeraTK/ControlSystemAdapter-OPC-UA-Adapter/blob/master/opcuaAdapter_mapping.xml)
+
+#### TANGO
+
+The mapping file for TANGO has to be named `generic_chimeratk_server-AttributeMapper.xml`. For details on the file format, refer to [the
+AttributeMapper documentation](https://chimeratk.github.io/ChimeraTK-ControlSystemAdapter-TangoAdapter/head/html/index.html#attribute_mapping)
