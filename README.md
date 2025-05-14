@@ -137,6 +137,11 @@ And then we just close off the file.
 </configuration>
 ```
 
+### Python integration
+
+For integrating python application modules into the generic server setup, refer
+to [the commented python example in the ApplicationCore documentation](https://chimeratk.github.io/ChimeraTK-ApplicationCore/head/html/example_python_modules.html)
+
 ### Configuring the control system
 
 The configuration file for the control system depends on the chosen control
