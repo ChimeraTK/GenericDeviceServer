@@ -166,5 +166,5 @@ For further details on the format, refer to the [example configuration](https://
 
 #### TANGO
 
-The mapping file for TANGO has to be named `generic_chimeratk_server-AttributeMapper.xml`. For details on the file format, refer to [the
-AttributeMapper documentation](https://chimeratk.github.io/ChimeraTK-ControlSystemAdapter-TangoAdapter/head/html/index.html#attribute_mapping)
+The mapping file for TANGO has to be named `tango-generic-chimeratk-server02-AttributeMapper.xml`, or more specifically the name of the executable.
+For details on the file format, refer to [the AttributeMapper documentation](https://chimeratk.github.io/ChimeraTK-ControlSystemAdapter-TangoAdapter/head/html/index.html#attribute_mapping)
