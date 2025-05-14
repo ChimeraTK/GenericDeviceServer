@@ -150,7 +150,7 @@ the control system.
 
 #### DOOCS
 
-DOOCS requires you to set up a server configuration file named `doocs-generic-chimeratk-server01.conf`.
+DOOCS requires you to set up a server configuration file named `doocs-generic-chimeratk-server02.conf`.
 
 Additional configuration of variable mapping can be done through the DOOCS variable mapping file. It has to be named
 `generic_chimeratk_server-DoocsVariableConfig.xml`.
