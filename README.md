@@ -137,6 +137,11 @@ And then we just close off the file.
 </configuration>
 ```
 
+### Python integration
+
+For integrating python application modules into the generic server setup, refer
+to [the commented python example in the ApplicationCore documentation](https://chimeratk.github.io/ChimeraTK-ApplicationCore/head/html/example_python_modules.html)
+
 ### Configuring the control system
 
 The configuration file for the control system depends on the chosen control
@@ -145,7 +150,7 @@ the control system.
 
 #### DOOCS
 
-DOOCS requires you to set up a server configuration file named `doocs-generic-chimeratk-server01.conf`.
+DOOCS requires you to set up a server configuration file named `doocs-generic-chimeratk-server02.conf`.
 
 Additional configuration of variable mapping can be done through the DOOCS variable mapping file. It has to be named
 `generic_chimeratk_server-DoocsVariableConfig.xml`.
@@ -166,5 +171,5 @@ For further details on the format, refer to the [example configuration](https://
 
 #### TANGO
 
-The mapping file for TANGO has to be named `generic_chimeratk_server-AttributeMapper.xml`. For details on the file format, refer to [the
-AttributeMapper documentation](https://chimeratk.github.io/ChimeraTK-ControlSystemAdapter-TangoAdapter/head/html/index.html#attribute_mapping)
+The mapping file for TANGO has to be named `tango-generic-chimeratk-server02-AttributeMapper.xml`, or more specifically the name of the executable.
+For details on the file format, refer to [the AttributeMapper documentation](https://chimeratk.github.io/ChimeraTK-ControlSystemAdapter-TangoAdapter/head/html/index.html#attribute_mapping)
