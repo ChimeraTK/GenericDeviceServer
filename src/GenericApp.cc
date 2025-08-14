@@ -16,6 +16,11 @@ GenericApp::DeviceModuleGroup::DeviceModuleGroup(ctk::ModuleGroup* owner, std::s
 GenericApp::GenericApp() : Application("generic_chimeratk_server") {
   ChimeraTK::setDMapFilePath("devices.dmap");
 
+  if(std::getenv("GENERIC_SERVER_DEBUG_CONNECTIONS") != nullptr) {
+    debugMakeConnections();
+    ctk::Logger::getInstance().setMinSeverity(ctk::Logger::Severity::debug);
+  }
+
   auto& config = appConfig();
   std::vector<std::string> timers;
   try {
