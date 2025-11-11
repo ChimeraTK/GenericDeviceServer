@@ -6,8 +6,8 @@
 #include <ChimeraTK/Exception.h>
 
 GenericApp::DeviceModuleGroup::DeviceModuleGroup(ctk::ModuleGroup* owner, std::string alias, std::string triggerPath,
-    std::string pathInDevice, std::string initScript)
-: ModuleGroup(owner, alias, ""), _deviceModule(this, alias, triggerPath, nullptr, pathInDevice) {
+    std::string pathInDevice, std::string initScript, std::string targetInCS)
+: ModuleGroup(owner, targetInCS, ""), _deviceModule(this, alias, triggerPath, nullptr, pathInDevice) {
   if(!initScript.empty()) {
     initHandler = std::make_unique<ctk::ScriptedInitHandler>(this, "", "", initScript, _deviceModule);
   }
@@ -36,8 +36,11 @@ GenericApp::GenericApp() : Application("generic_chimeratk_server") {
     // No devices, nothing to do. Just catch the exception and leave the list empty.
   }
   for(const std::string& device : devices) {
-    deviceModules.emplace_back(this, device, config.get<std::string>(device + "/triggerPath"),
-        config.get<std::string>(device + "/pathInDevice"), config.get<std::string>(device + "/initScript"));
+    auto targetInCS = config.get<std::string>(device + "/targetInCS", device);
+    auto alias = config.get<std::string>(device + "/alias", device);
+
+    deviceModules.emplace_back(this, alias, config.get<std::string>(device + "/triggerPath"),
+        config.get<std::string>(device + "/pathInDevice"), config.get<std::string>(device + "/initScript"), targetInCS);
   }
 }
 

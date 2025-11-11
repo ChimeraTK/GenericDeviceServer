@@ -17,7 +17,7 @@ struct GenericApp : public ctk::Application {
 
   struct DeviceModuleGroup : public ctk::ModuleGroup {
     DeviceModuleGroup(ctk::ModuleGroup* owner, std::string alias, std::string triggerPath, std::string pathInDevice,
-        std::string initScript);
+        std::string initScript, std::string targetInCS);
     ctk::DeviceModule _deviceModule;
     std::unique_ptr<ctk::ScriptedInitHandler> initHandler;
   };
