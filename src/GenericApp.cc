@@ -7,7 +7,8 @@
 
 GenericApp::DeviceModuleGroup::DeviceModuleGroup(ctk::ModuleGroup* owner, std::string alias, std::string triggerPath,
     std::string pathInDevice, std::string initScript)
-: ModuleGroup(owner, alias, ""), _deviceModule(this, alias, triggerPath, nullptr, pathInDevice) {
+: ModuleGroup(owner, appConfig().get<std::string>(alias + "/pathInCS", alias), ""),
+  _deviceModule(this, alias, triggerPath, nullptr, pathInDevice) {
   if(!initScript.empty()) {
     initHandler = std::make_unique<ctk::ScriptedInitHandler>(this, "", "", initScript, _deviceModule);
   }
