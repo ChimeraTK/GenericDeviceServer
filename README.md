@@ -22,16 +22,16 @@ might be necessary.
 
 The DMAP file has to be named `devices.dmap`.
 It provides a mapping of name aliases to device addresses. For the full
-description of the format, see
-https://chimeratk.github.io/DeviceAccess/master/dmap.html. The aliases will be
+description of the format, see the
+[DeviceAccess documentation](https://chimeratk.github.io/ChimeraTK-DeviceAccess/tag/html/dmap.html). The aliases will be
 used in the configuration file.
 
 ### The server configuration file
 
 This file controls which devices are exposed to the control system.
-It has to be named `generic_chimeratk_server_configuration.xml`. The full
+It has to be named `generic_chimeratk_server-config.xml`. The full
 description of the configuration format can be found at
-https://chimeratk.github.io/ApplicationCore/master/configreader.html
+the [ApplicationCore documentation](https://chimeratk.github.io/ChimeraTK-ApplicationCore/tag/html/configreader.html).
 
 The server configuration file has to define two variables:
 
