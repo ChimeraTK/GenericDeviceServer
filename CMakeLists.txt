@@ -69,7 +69,7 @@ target_link_libraries(${EXE_NAME}-xmlGenerator PUBLIC ${EXE_NAME}_impl)
 if(ADAPTER STREQUAL "DOOCS")
   file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${EXE_NAME}.conf DESTINATION ${PROJECT_BINARY_DIR})
   file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}-DoocsVariableConfig.xml DESTINATION ${PROJECT_BINARY_DIR})
-endif()  
+endif()
 # The application configuration and map/dmap files
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}-config.xml DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/devices.dmap DESTINATION ${PROJECT_BINARY_DIR})
@@ -90,3 +90,4 @@ add_test(testGenericServer ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/testGenericServer)
 
 #install executables
 install(TARGETS ${EXE_NAME} RUNTIME DESTINATION bin)
+install(TARGETS ${EXE_NAME}-xmlGenerator RUNTIME DESTINATION bin)
