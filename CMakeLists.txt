@@ -20,8 +20,8 @@ elseif(ADAPTER STREQUAL "TANGO")
 endif()
 
 set(${PROJECT_NAME}_MAJOR_VERSION 02)
-set(${PROJECT_NAME}_MINOR_VERSION 02)
-set(${PROJECT_NAME}_PATCH_VERSION 01)
+set(${PROJECT_NAME}_MINOR_VERSION 03)
+set(${PROJECT_NAME}_PATCH_VERSION 00)
 include(${CMAKE_SOURCE_DIR}/cmake/set_version_numbers.cmake)
 
 set(EXE_NAME ${EXE_NAME_PREFIX}${EXE_BASE_NAME}${${PROJECT_NAME}_MAJOR_VERSION})
@@ -43,6 +43,7 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 include(cmake/enable_code_coverage_report.cmake)
 include(cmake/set_control_system_adapter.cmake)
 find_package(ChimeraTK-ApplicationCore 03.00 REQUIRED)
+find_package(${ADAPTERS_MATCHING_BACKEND} REQUIRED)
 
 aux_source_directory(${CMAKE_SOURCE_DIR}/server server_sources)
 aux_source_directory(${CMAKE_SOURCE_DIR}/src library_sources)
@@ -59,7 +60,7 @@ target_link_libraries(${EXE_NAME}_impl ChimeraTK::ChimeraTK-ApplicationCore)
 
 # main server executable
 add_executable(${EXE_NAME} ${server_sources})
-target_link_libraries(${EXE_NAME} PUBLIC ${EXE_NAME}_impl PRIVATE ChimeraTK::SelectedAdapter)
+target_link_libraries(${EXE_NAME} PUBLIC ${EXE_NAME}_impl PRIVATE ChimeraTK::SelectedAdapter ChimeraTK::${ADAPTERS_MATCHING_BACKEND})
 
 add_executable(${EXE_NAME}-xmlGenerator ${server_sources})
 target_compile_options(${EXE_NAME}-xmlGenerator PRIVATE "-DGENERATE_XML")
