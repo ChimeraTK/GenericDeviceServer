@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 project(ChimeraTK-Generic-Device-Server)
 
 set(EXE_BASE_NAME generic-chimeratk-server)
+
 # Unfortunately application core does not allow hyphens in the app name. Have to use underscore.
 set(CHIMERATK_APP_NAME generic_chimeratk_server)
 
@@ -31,8 +32,8 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 # Force it into Release if "None" is specified (needed to overrule dkpg_buildpackage)
 if(NOT CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "None")
   set(CMAKE_BUILD_TYPE "Release" CACHE STRING
-      "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel."
-      FORCE)
+    "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel."
+    FORCE)
 endif(NOT CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "None")
 
 include(cmake/set_default_flags.cmake)
@@ -70,6 +71,7 @@ if(ADAPTER STREQUAL "DOOCS")
   file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${EXE_NAME}.conf DESTINATION ${PROJECT_BINARY_DIR})
   file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}-DoocsVariableConfig.xml DESTINATION ${PROJECT_BINARY_DIR})
 endif()
+
 # The application configuration and map/dmap files
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/${CHIMERATK_APP_NAME}-config.xml DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/sample_configs/devices.dmap DESTINATION ${PROJECT_BINARY_DIR})
@@ -80,14 +82,15 @@ find_package(Boost COMPONENTS unit_test_framework)
 
 # Test executables and helper scripts
 foreach(target writeWordStatus testGenericServer)
-    add_executable(${target} tests/${target}.cc)
-    target_link_libraries(${target} PUBLIC ${EXE_NAME}_impl PRIVATE Boost::unit_test_framework)
+  add_executable(${target} tests/${target}.cc)
+  target_link_libraries(${target} PUBLIC ${EXE_NAME}_impl PRIVATE Boost::unit_test_framework)
 endforeach()
 
 enable_testing()
-#don't add the helper scripts as tests
+
+# don't add the helper scripts as tests
 add_test(testGenericServer ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/testGenericServer)
 
-#install executables
+# install executables
 install(TARGETS ${EXE_NAME} RUNTIME DESTINATION bin)
 install(TARGETS ${EXE_NAME}-xmlGenerator RUNTIME DESTINATION bin)
