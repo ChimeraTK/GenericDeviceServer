@@ -64,7 +64,7 @@ target_link_libraries(${EXE_NAME} PUBLIC ${EXE_NAME}_impl PRIVATE ChimeraTK::Sel
 
 add_executable(${EXE_NAME}-xmlGenerator ${server_sources})
 target_compile_options(${EXE_NAME}-xmlGenerator PRIVATE "-DGENERATE_XML")
-target_link_libraries(${EXE_NAME}-xmlGenerator PUBLIC ${EXE_NAME}_impl)
+target_link_libraries(${EXE_NAME}-xmlGenerator PUBLIC ${EXE_NAME}_impl PRIVATE ChimeraTK::${ADAPTERS_MATCHING_BACKEND})
 
 # copy example configuration to build directory - this is also needed for the tests
 # The doocs server config and doocs adapter config
